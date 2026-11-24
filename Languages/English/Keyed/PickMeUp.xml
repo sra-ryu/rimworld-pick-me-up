@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PMU_SettingsTitle>Pick Me Up</PMU_SettingsTitle>
+  <PMU_MatchMode>How to combine the conditions</PMU_MatchMode>
+  <PMU_MatchAll>Match all conditions (AND)</PMU_MatchAll>
+  <PMU_MatchAllTip>A pawn is picked only if every condition below is met.</PMU_MatchAllTip>
+  <PMU_MatchAny>Match any condition (OR)</PMU_MatchAny>
+  <PMU_MatchAnyTip>A pawn is picked if at least one condition below is met.</PMU_MatchAnyTip>
+  <PMU_Conditions>Skill conditions (skill and minimum level)</PMU_Conditions>
+  <PMU_AddCondition>Add condition</PMU_AddCondition>
+  <PMU_AllSkillsUsed>Every skill already has a condition.</PMU_AllSkillsUsed>
+  <PMU_NoConditions>No conditions yet. Add one to start looking for pawns.</PMU_NoConditions>
+  <PMU_RemoveCondition>Remove this condition</PMU_RemoveCondition>
+</LanguageData>
