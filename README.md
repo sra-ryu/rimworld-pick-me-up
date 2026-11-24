@@ -4,10 +4,11 @@ A RimWorld 1.7 mod that marks hostile pawns who have the skills you are looking 
 
 ## Demo
 
-Screenshots are being uploaded.
+![Star markers above matching hostile pawns](docs/demo.png)
 
-<!-- TODO: when the screenshot is ready (e.g. docs/demo.png), replace the line above with:
-![Star markers above matching raiders](docs/demo.png) -->
+The condition window, opened with your own shortcut key:
+
+![Condition window](docs/conditions.png)
 
 ## Features
 
@@ -88,7 +89,7 @@ RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리
 
 ## 데모
 
-업로드 중입니다.
+스크린샷은 위 Demo 섹션을 참고하세요. 첫 번째는 조건에 맞는 적대 림 위에 뜬 별 마크이고, 두 번째는 조건 창입니다.
 
 ## 주요 기능
 
