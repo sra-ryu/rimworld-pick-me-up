@@ -71,10 +71,11 @@ namespace PickMeUp
                 return;
             }
 
-            // The condition list scrolls inside whatever space is left.
+            // The condition list scrolls inside whatever space is left. It must be drawn before
+            // listing.End(): the listing works in a group, so its rects are relative to that group.
             Rect outRect = listing.GetRect(inRect.height - listing.CurHeight);
-            listing.End();
             DrawConditionList(outRect);
+            listing.End();
         }
 
         private void DrawConditionList(Rect outRect)

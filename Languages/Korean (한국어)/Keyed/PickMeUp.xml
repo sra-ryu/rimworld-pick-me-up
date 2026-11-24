@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PMU_SettingsTitle>Pick Me Up</PMU_SettingsTitle>
+  <PMU_MatchMode>조건을 합치는 방식</PMU_MatchMode>
+  <PMU_MatchAll>모든 조건 만족 (AND)</PMU_MatchAll>
+  <PMU_MatchAllTip>아래 조건을 모두 만족하는 림만 선택합니다.</PMU_MatchAllTip>
+  <PMU_MatchAny>하나라도 만족 (OR)</PMU_MatchAny>
+  <PMU_MatchAnyTip>아래 조건 중 하나라도 만족하는 림을 선택합니다.</PMU_MatchAnyTip>
+  <PMU_Conditions>스킬 조건 (스킬과 최소 레벨)</PMU_Conditions>
+  <PMU_AddCondition>조건 추가</PMU_AddCondition>
+  <PMU_AllSkillsUsed>모든 스킬에 이미 조건이 있습니다.</PMU_AllSkillsUsed>
+  <PMU_NoConditions>아직 조건이 없습니다. 조건을 추가하면 림을 찾기 시작합니다.</PMU_NoConditions>
+  <PMU_RemoveCondition>이 조건 삭제</PMU_RemoveCondition>
+</LanguageData>
