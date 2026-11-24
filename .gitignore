@@ -4,3 +4,4 @@ obj/
 *.user
 Assemblies/*.dll
 Assemblies/*.pdb
+dist/
