@@ -15,7 +15,7 @@ namespace PickMeUp
 
         // Star size in map cells, and how far above the pawn's centre it floats (also in cells).
         private const float StarSizeInCells = 0.8f;
-        private const float StarOffsetInCells = 0.9f;
+        private const float StarOffsetInCells = 1.2f;
 
         private readonly List<Pawn> matches = new List<Pawn>();
         private float nextRefreshTime;
