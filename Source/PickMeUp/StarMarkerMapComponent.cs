@@ -26,7 +26,8 @@ namespace PickMeUp
 
         public override void MapComponentOnGUI()
         {
-            if (Event.current.type != EventType.Repaint || map != Find.CurrentMap)
+            if (Event.current.type != EventType.Repaint || map != Find.CurrentMap
+                || !PickMeUpMod.Settings.enabled)
             {
                 return;
             }

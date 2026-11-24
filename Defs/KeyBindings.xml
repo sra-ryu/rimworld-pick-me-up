@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <KeyBindingCategoryDef>
+    <defName>PickMeUp_Category</defName>
+    <label>Pick Me Up</label>
+    <description>Shortcuts for the Pick Me Up mod.</description>
+    <checkForConflicts>
+      <li>MainTabs</li>
+    </checkForConflicts>
+  </KeyBindingCategoryDef>
+
+  <!-- No default keys on purpose: the player assigns them in Options > Keyboard config. -->
+  <KeyBindingDef>
+    <defName>PickMeUp_OpenWindow</defName>
+    <label>Open/close condition window</label>
+    <category>PickMeUp_Category</category>
+  </KeyBindingDef>
+
+  <KeyBindingDef>
+    <defName>PickMeUp_ToggleMarkers</defName>
+    <label>Show/hide star markers</label>
+    <category>PickMeUp_Category</category>
+  </KeyBindingDef>
+
+</Defs>
