@@ -6,7 +6,7 @@ namespace PickMeUp
     /// <summary>One "skill X must be at least level N" rule.</summary>
     public class SkillCondition : IExposable
     {
-        public const int DefaultLevel = 8;
+        public const int DefaultLevel = 5;
         public const int MaxLevel = 20;
 
         public string skillDefName;
@@ -19,7 +19,9 @@ namespace PickMeUp
         public void ExposeData()
         {
             Scribe_Values.Look(ref skillDefName, "skill");
-            Scribe_Values.Look(ref minLevel, "minLevel", DefaultLevel);
+            // forceSave: RimWorld skips values equal to the default, which would silently change
+            // saved conditions whenever DefaultLevel changes.
+            Scribe_Values.Look(ref minLevel, "minLevel", DefaultLevel, forceSave: true);
         }
     }
 }
