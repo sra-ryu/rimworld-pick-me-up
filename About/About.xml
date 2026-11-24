@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Pick Me Up</name>
+  <author>comdobby</author>
+  <packageId>comdobby.PickMeUp</packageId>
+  <supportedVersions>
+    <li>1.7</li>
+  </supportedVersions>
+  <description>Finds hostile pawns with the skills and levels you choose, and marks them with a star above their heads.</description>
+</ModMetaData>
