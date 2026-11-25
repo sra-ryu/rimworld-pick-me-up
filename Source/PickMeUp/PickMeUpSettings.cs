@@ -14,6 +14,12 @@ namespace PickMeUp
 
         public List<SkillCondition> conditions = new List<SkillCondition>();
 
+        /// <summary>Removes every condition, back to the empty state a fresh install starts with.</summary>
+        public void ResetConditions()
+        {
+            conditions.Clear();
+        }
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref enabled, "enabled", true);

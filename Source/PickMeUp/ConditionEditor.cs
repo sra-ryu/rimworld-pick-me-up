@@ -45,14 +45,28 @@ namespace PickMeUp
             listing.GapLine();
             listing.Label("PMU_Conditions".Translate());
 
-            if (UnusedSkills(null).Any())
+            // [Add condition] [Reset]. When every skill is used there is nothing to add, so only
+            // the reset button is left.
+            Rect buttonRow = listing.GetRect(30f);
+            bool canAdd = UnusedSkills(null).Any();
+            float resetWidth = canAdd ? buttonRow.width / 5f : buttonRow.width;
+            var resetRect = new Rect(buttonRow.xMax - resetWidth, buttonRow.y, resetWidth, buttonRow.height);
+            if (canAdd)
             {
-                if (listing.ButtonText("PMU_AddCondition".Translate()))
+                var addRect = new Rect(buttonRow.x, buttonRow.y, buttonRow.width - resetWidth - 6f, buttonRow.height);
+                if (Widgets.ButtonText(addRect, "PMU_AddCondition".Translate()))
                 {
                     AddCondition();
                 }
             }
-            else
+            TooltipHandler.TipRegion(resetRect, "PMU_ResetConditionsTip".Translate());
+            if (Widgets.ButtonText(resetRect, "PMU_ResetConditions".Translate()))
+            {
+                // Asks first: the reset throws away every condition the player has set up.
+                Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                    "PMU_ResetConditionsConfirm".Translate(), Settings.ResetConditions, destructive: true));
+            }
+            if (!canAdd)
             {
                 GUI.color = Color.gray;
                 listing.Label("PMU_AllSkillsUsed".Translate());

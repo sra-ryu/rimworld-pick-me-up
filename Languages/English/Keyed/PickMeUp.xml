@@ -10,6 +10,9 @@
   <PMU_AddCondition>Add condition</PMU_AddCondition>
   <PMU_AllSkillsUsed>Every skill already has a condition.</PMU_AllSkillsUsed>
   <PMU_NoConditions>No conditions yet. Add one to start looking for pawns.</PMU_NoConditions>
+  <PMU_ResetConditions>Reset</PMU_ResetConditions>
+  <PMU_ResetConditionsTip>Remove every condition.</PMU_ResetConditionsTip>
+  <PMU_ResetConditionsConfirm>Remove all your conditions?</PMU_ResetConditionsConfirm>
   <PMU_RemoveCondition>Remove this condition</PMU_RemoveCondition>
   <PMU_Enabled>Show arrow markers</PMU_Enabled>
   <PMU_EnabledTip>Turn the markers off without losing your conditions.</PMU_EnabledTip>
