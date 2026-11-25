@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -18,21 +20,73 @@ namespace PickMeUp
         private const float ArrowOffsetInCells = 1.2f;
 
         private readonly List<Pawn> matches = new List<Pawn>();
+
+        // thingIDNumber of the pawns whose arrow the player clicked away. Saved with the game.
+        private readonly HashSet<int> hiddenPawnIds = new HashSet<int>();
+        private List<int> hiddenSaveBuffer;
         private float nextRefreshTime;
 
         public ArrowMarkerMapComponent(Map map) : base(map)
         {
         }
 
+        public int HiddenCount => hiddenPawnIds.Count;
+
+        public bool IsHidden(Pawn pawn)
+        {
+            return hiddenPawnIds.Contains(pawn.thingIDNumber);
+        }
+
+        public void SetHidden(Pawn pawn, bool hidden)
+        {
+            if (hidden)
+            {
+                hiddenPawnIds.Add(pawn.thingIDNumber);
+            }
+            else
+            {
+                hiddenPawnIds.Remove(pawn.thingIDNumber);
+            }
+        }
+
+        /// <summary>Brings back every arrow the player clicked away.</summary>
+        public void ShowAllHidden()
+        {
+            hiddenPawnIds.Clear();
+        }
+
+        public override void ExposeData()
+        {
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                hiddenSaveBuffer = new List<int>(hiddenPawnIds);
+            }
+            Scribe_Collections.Look(ref hiddenSaveBuffer, "hiddenPawnIds", LookMode.Value);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                hiddenPawnIds.Clear();
+                if (hiddenSaveBuffer != null)
+                {
+                    hiddenPawnIds.UnionWith(hiddenSaveBuffer);
+                }
+            }
+            if (Scribe.mode != LoadSaveMode.Inactive)
+            {
+                hiddenSaveBuffer = null;
+            }
+        }
+
         public override void MapComponentOnGUI()
         {
-            if (Event.current.type != EventType.Repaint || map != Find.CurrentMap
-                || !PickMeUpMod.Settings.enabled)
+            // Mouse events are needed too: clicking an arrow hides it.
+            EventType type = Event.current.type;
+            if ((type != EventType.Repaint && type != EventType.MouseDown && type != EventType.MouseUp)
+                || map != Find.CurrentMap || !PickMeUpMod.Settings.enabled)
             {
                 return;
             }
 
-            if (Time.realtimeSinceStartup >= nextRefreshTime)
+            if (type == EventType.Repaint && Time.realtimeSinceStartup >= nextRefreshTime)
             {
                 nextRefreshTime = Time.realtimeSinceStartup + RefreshInterval;
                 Refresh();
@@ -49,13 +103,27 @@ namespace PickMeUp
             foreach (Pawn pawn in matches)
             {
                 // The list can be up to RefreshInterval old: skip pawns that left or died since.
-                if (!pawn.Spawned || pawn.Dead || pawn.Map != map || !view.Contains(pawn.Position))
+                if (!pawn.Spawned || pawn.Dead || pawn.Map != map || !view.Contains(pawn.Position)
+                    || IsHidden(pawn))
                 {
                     continue;
                 }
 
                 Vector2 pos = GenMapUI.LabelDrawPosFor(pawn, ArrowOffsetInCells);
-                GUI.DrawTexture(new Rect(pos.x - size / 2f, pos.y - size / 2f, size, size), ArrowTextures.Arrow);
+                var rect = new Rect(pos.x - size / 2f, pos.y - size / 2f, size, size);
+                GUI.DrawTexture(rect, ArrowTextures.Arrow);
+
+                // A window on top of the arrow gets the click instead.
+                if (Find.WindowStack.GetWindowAt(UI.MousePositionOnUIInverted) != null)
+                {
+                    continue;
+                }
+                Widgets.DrawHighlightIfMouseover(rect);
+                TooltipHandler.TipRegion(rect, "PMU_HideArrowTip".Translate());
+                if (Widgets.ButtonInvisible(rect, doMouseoverSound: false))
+                {
+                    SetHidden(pawn, true);
+                }
             }
         }
 
@@ -63,6 +131,12 @@ namespace PickMeUp
         {
             matches.Clear();
             matches.AddRange(PawnMatcher.FindMatches(map));
+
+            // Forget hidden pawns that are gone (dead, left, captured), so the list cannot grow forever.
+            if (hiddenPawnIds.Count > 0)
+            {
+                hiddenPawnIds.RemoveWhere(id => !map.mapPawns.AllPawnsSpawned.Any(p => p.thingIDNumber == id));
+            }
         }
     }
 }

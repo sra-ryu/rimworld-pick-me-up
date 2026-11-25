@@ -72,6 +72,7 @@ namespace PickMeUp
                 listing.Label("PMU_AllSkillsUsed".Translate());
                 GUI.color = Color.white;
             }
+
             listing.Gap(6f);
 
             if (Settings.conditions.Count == 0)
