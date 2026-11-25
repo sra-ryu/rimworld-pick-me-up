@@ -20,7 +20,6 @@
   <PMU_MatchList>조건에 맞는 림 ({0})</PMU_MatchList>
   <PMU_NoMatches>이 맵에 조건에 맞는 적대 림이 없습니다.</PMU_NoMatches>
   <PMU_ShowAll>모두 표시</PMU_ShowAll>
-  <PMU_JumpTip>클릭하면 이 림으로 이동합니다.</PMU_JumpTip>
   <PMU_ArrowCheckboxTip>이 림 위의 화살표를 표시합니다.</PMU_ArrowCheckboxTip>
   <PMU_ShowList>림 목록 &gt;&gt;</PMU_ShowList>
   <PMU_HideList>림 목록 &lt;&lt;</PMU_HideList>

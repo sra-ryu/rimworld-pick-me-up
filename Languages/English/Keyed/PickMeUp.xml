@@ -20,7 +20,6 @@
   <PMU_MatchList>Matching pawns ({0})</PMU_MatchList>
   <PMU_NoMatches>No matching hostile pawns on this map.</PMU_NoMatches>
   <PMU_ShowAll>Show all</PMU_ShowAll>
-  <PMU_JumpTip>Click to jump to this pawn.</PMU_JumpTip>
   <PMU_ArrowCheckboxTip>Show the arrow above this pawn.</PMU_ArrowCheckboxTip>
   <PMU_ShowList>Pawn list &gt;&gt;</PMU_ShowList>
   <PMU_HideList>Pawn list &lt;&lt;</PMU_HideList>

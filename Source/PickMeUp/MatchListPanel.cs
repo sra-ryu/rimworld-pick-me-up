@@ -99,7 +99,7 @@ namespace PickMeUp
 
         private static void DrawRow(Rect row, Pawn pawn, ArrowMarkerMapComponent markers, int index)
         {
-            // [name + skills (click = jump to the pawn)] [arrow checkbox]
+            // [name + skills] [arrow checkbox]
             if (index % 2 == 0)
             {
                 Widgets.DrawAltRect(row);
@@ -110,7 +110,6 @@ namespace PickMeUp
                 row.y + (row.height - CheckboxSize) / 2f, CheckboxSize, CheckboxSize);
             var textRect = new Rect(row.x + 6f, row.y, checkRect.x - row.x - 12f, row.height);
 
-            Widgets.DrawHighlightIfMouseover(textRect);
             GUI.color = hidden ? Color.gray : Color.white;
             Text.Font = GameFont.Small;
             Widgets.Label(new Rect(textRect.x, textRect.y + 3f, textRect.width, 22f), pawn.LabelShortCap);
@@ -118,12 +117,6 @@ namespace PickMeUp
             Widgets.Label(new Rect(textRect.x, textRect.y + 24f, textRect.width, 18f), SkillSummary(pawn));
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-
-            TooltipHandler.TipRegion(textRect, "PMU_JumpTip".Translate());
-            if (Widgets.ButtonInvisible(textRect, doMouseoverSound: false))
-            {
-                CameraJumper.TryJump(pawn);
-            }
 
             TooltipHandler.TipRegion(checkRect, "PMU_ArrowCheckboxTip".Translate());
             bool shown = !hidden;
