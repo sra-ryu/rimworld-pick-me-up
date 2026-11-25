@@ -83,6 +83,10 @@ Source/PickMeUp/
   PickMeUpDebug.cs              Development-mode logging action
 ```
 
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
 ---
 
 # 픽 미 업
@@ -130,3 +134,7 @@ RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리
 ## 프로젝트 구조
 
 파일 구성은 위 Project Structure와 동일합니다.
+
+## 라이선스
+
+이 프로젝트는 [MIT 라이선스](LICENSE)를 따릅니다.

@@ -6,5 +6,29 @@
   <supportedVersions>
     <li>1.7</li>
   </supportedVersions>
-  <description>Finds hostile pawns with the skills and levels you choose, and marks them with an arrow above their heads.</description>
+  <description>Finds hostile pawns with the skills you are looking for and marks them with an arrow above their heads, to make recruiting easier.
+
+- Pick any skills (modded skills included) and a minimum level for each one.
+- Combine the conditions with AND or OR.
+- A pawn list next to the condition window shows every matching pawn. Untick one to hide its arrow, or just click an arrow on the map. You can bring it back from the list.
+- A switch to hide all arrows without losing your conditions.
+- No default keys. Assign your own in Options > Keyboard config.
+- No Harmony or other mod dependencies.
+- Languages: English, Korean.
+
+Developed and tested on macOS. Windows and Linux are untested.
+
+----------------------------------------
+
+원하는 스킬을 가진 적대 림의 머리 위에 화살표를 표시해서, 영입할 림을 쉽게 찾을 수 있게 해 주는 모드입니다.
+
+- 원하는 스킬(모드 스킬 포함)과 스킬별 최소 레벨을 지정합니다.
+- 조건을 AND 또는 OR로 묶을 수 있습니다.
+- 조건 창 옆의 림 목록에서 조건에 맞는 림을 한눈에 보고, 체크를 풀어 그 림의 화살표를 숨길 수 있습니다. 맵의 화살표를 클릭해도 숨겨지며, 목록에서 다시 표시할 수 있습니다.
+- 조건은 유지한 채 모든 화살표만 끄는 스위치가 있습니다.
+- 기본 단축키는 없습니다. 옵션 > 키보드 설정에서 직접 지정하세요.
+- Harmony 등 다른 모드에 의존하지 않습니다.
+- 지원 언어: 영어, 한국어.
+
+macOS에서 개발하고 테스트했습니다. Windows와 Linux는 테스트하지 않았습니다.</description>
 </ModMetaData>
