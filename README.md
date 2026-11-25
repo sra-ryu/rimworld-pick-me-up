@@ -1,6 +1,8 @@
 # Pick Me Up
 
-A RimWorld 1.7 mod that marks hostile pawns who have the skills you are looking for with an arrow above their heads, to make recruiting easier.
+Are you clicking on every enemy and opening their character tab just to find a pawn with the skills you want?
+
+A RimWorld 1.7 mod that marks hostile pawns who have the skills you are looking for with an arrow above their heads, so you can spot the right recruit at a glance.
 
 ## Demo
 
@@ -19,7 +21,8 @@ The pawn list next to it. Untick a pawn to hide its arrow (you can also click an
 - Pick any skills (modded skills included) and a minimum level for each one.
 - Combine the conditions with **AND** ("Medicine and Intellectual at level 8 or higher") or **OR** ("Medicine or Intellectual at level 8 or higher").
 - If a matching hostile pawn is on the map you are viewing, an arrow appears above their head.
-- A condition window you can open while playing, plus a switch to hide the arrows without losing your conditions.
+- A condition window you can open while playing, with a pawn list next to it that shows every matching pawn. Untick a pawn to hide its arrow, or just click the arrow on the map. You can show it again from the list.
+- A switch to hide all arrows without losing your conditions.
 - No keyboard shortcut is assigned by default. You choose your own keys.
 - Pawns who can never do a skill (for example, incapable of violence) do not match that skill. Prisoners and slaves of your colony are never marked.
 - Languages: English, Korean.
@@ -58,6 +61,7 @@ The built `Assemblies/*.dll` and `*.pdb` files are not committed, so every fresh
 2. Press that key during play, click **Add condition**, choose a skill and drag the slider to the minimum level. Repeat for more skills.
 3. Choose **Match all conditions (AND)** or **Match any condition (OR)**.
 4. Matching hostile pawns get an arrow right away. The same editor is also available under `Options > Mod settings > Pick Me Up`.
+5. If you only like some of them, use the pawn list next to the window: untick a pawn to hide its arrow, or click the arrow on the map. **Show all** brings every hidden arrow back.
 
 For example, with `Shooting 10` and `Melee 10` set to OR, any raider who is level 10 or higher in either skill is marked. Switch to AND and only raiders who reach both are marked.
 
@@ -93,7 +97,9 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 소개
 
-RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리 위에 화살표 마크를 표시해서, 영입을 쉽게 할 수 있도록 합니다.
+원하는 스킬을 가진 림을 영입하려고 적군을 하나하나 클릭해서 캐릭터 창을 확인하고 계신가요?
+
+RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리 위에 화살표를 표시해서, 영입할 림을 쉽게 찾을 수 있게 해 줍니다.
 
 ## 데모
 
@@ -104,7 +110,8 @@ RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리
 - 원하는 스킬(모드 스킬 포함)과 스킬별 최소 레벨을 지정합니다.
 - 조건을 **AND**("의학과 연구가 모두 8레벨 이상") 또는 **OR**("의학 또는 연구가 8레벨 이상")로 묶을 수 있습니다.
 - 지금 보고 있는 맵에 조건에 맞는 적대 림이 있다면 머리 위에 화살표가 표시됩니다.
-- 플레이 중에 열 수 있는 조건 창과, 조건은 유지한 채 화살표만 끄는 스위치가 있습니다.
+- 플레이 중에 열 수 있는 조건 창과, 그 옆에서 조건에 맞는 림을 한눈에 보여 주는 림 목록이 있습니다. 체크를 풀어 그 림의 화살표를 숨길 수 있고, 맵의 화살표를 클릭해도 숨겨집니다. 목록에서 다시 표시할 수 있습니다.
+- 조건은 유지한 채 모든 화살표만 끄는 스위치가 있습니다.
 - 기본 단축키는 지정되어 있지 않으며, 직접 키를 정합니다.
 - 해당 스킬을 아예 못 하는 림(예: 폭력 불가)은 그 스킬 조건에 맞지 않는 것으로 처리합니다. 정착지의 죄수와 노예는 표시하지 않습니다.
 - 지원 언어: 영어, 한국어
@@ -124,10 +131,11 @@ RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리
 
 ## 사용 예시
 
-1. `옵션 → 키보드 설정`에서 **Pick Me Up** 항목을 찾아 **조건 창 열기/닫기**에 키를 지정합니다. 화살표 마크 켜기/끄기 키도 원하면 지정합니다.
+1. `환경설정 → 키보드 조작`에서 **Pick Me Up** 항목을 찾아 **조건 창 열기/닫기**에 키를 지정합니다. 화살표 마크 켜기/끄기 키도 원하면 지정합니다.
 2. 플레이 중 그 키로 조건 창을 열고, **조건 추가**를 눌러 스킬을 고른 뒤 슬라이더로 최소 레벨을 정합니다. 스킬을 더 넣을 수도 있습니다.
 3. **모든 조건 만족 (AND)** 또는 **하나라도 만족 (OR)** 중에서 고릅니다.
-4. 조건에 맞는 적대 림에 바로 화살표가 표시됩니다. 같은 설정 화면이 `옵션 → 모드 설정 → Pick Me Up`에도 있습니다.
+4. 조건에 맞는 적대 림에 바로 화살표가 표시됩니다. 같은 설정 화면이 `환경설정 → 모드 설정 → Pick Me Up`에도 있습니다.
+5. 마음에 드는 림만 남기고 싶다면 창 옆의 림 목록을 쓰세요. 체크를 풀면 그 림의 화살표가 숨겨지고, 맵의 화살표를 클릭해도 됩니다. **모두 표시**를 누르면 숨긴 화살표가 전부 돌아옵니다.
 
 예를 들어 `사격 10`과 `격투 10`을 OR로 두면 둘 중 하나라도 10레벨 이상인 습격자가 표시됩니다. AND로 바꾸면 둘 다 10레벨 이상인 습격자만 표시됩니다.
 

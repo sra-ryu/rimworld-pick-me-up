@@ -6,29 +6,33 @@
   <supportedVersions>
     <li>1.7</li>
   </supportedVersions>
-  <description>Finds hostile pawns with the skills you are looking for and marks them with an arrow above their heads, to make recruiting easier.
+  <description>Are you clicking on every enemy and opening their character tab just to find a pawn with the skills you want?
+This mod marks hostile pawns who have the skills you are looking for with an arrow above their heads, so you can spot the right recruit at a glance.
 
-- Pick any skills (modded skills included) and a minimum level for each one.
+How to use
+1. Assign a key in Options > Keyboard config to open the mod window during the game.
+2. Set the skills and minimum levels you want in the mod window. Matching hostile pawns on the map you are viewing get an arrow above their heads.
+
+Features
 - Combine the conditions with AND or OR.
-- A pawn list next to the condition window shows every matching pawn. Untick one to hide its arrow, or just click an arrow on the map. You can bring it back from the list.
-- A switch to hide all arrows without losing your conditions.
-- No default keys. Assign your own in Options > Keyboard config.
+- The pawn list next to the condition window shows every matching pawn. Untick a pawn to hide its arrow, or just click the arrow on the map. You can show it again from the list.
+- A switch hides all arrows while keeping your conditions.
 - No Harmony or other mod dependencies.
 - Languages: English, Korean.
 
-Developed and tested on macOS. Windows and Linux are untested.
-
 ----------------------------------------
 
-원하는 스킬을 가진 적대 림의 머리 위에 화살표를 표시해서, 영입할 림을 쉽게 찾을 수 있게 해 주는 모드입니다.
+원하는 스킬을 가진 림을 영입하려고 적군을 하나하나 클릭해서 캐릭터 창을 확인하고 계신가요?
+이 모드는 원하는 스킬을 가진 적대 림의 머리 위에 화살표를 표시해서, 영입할 림을 쉽게 찾을 수 있게 해 줍니다.
 
-- 원하는 스킬(모드 스킬 포함)과 스킬별 최소 레벨을 지정합니다.
+사용법
+1. 환경설정 > 키보드 조작에서 단축키를 등록하면, 게임 중에 모드 창을 열 수 있습니다.
+2. 모드 창에서 원하는 스킬과 최소 레벨을 정하면, 지금 보고 있는 맵의 적대 림 중 조건에 맞는 림 머리 위에 화살표가 표시됩니다.
+
+기능
 - 조건을 AND 또는 OR로 묶을 수 있습니다.
 - 조건 창 옆의 림 목록에서 조건에 맞는 림을 한눈에 보고, 체크를 풀어 그 림의 화살표를 숨길 수 있습니다. 맵의 화살표를 클릭해도 숨겨지며, 목록에서 다시 표시할 수 있습니다.
-- 조건은 유지한 채 모든 화살표만 끄는 스위치가 있습니다.
-- 기본 단축키는 없습니다. 옵션 > 키보드 설정에서 직접 지정하세요.
+- 조건은 유지한 채 모든 화살표만 끄는 스위치도 있습니다.
 - Harmony 등 다른 모드에 의존하지 않습니다.
-- 지원 언어: 영어, 한국어.
-
-macOS에서 개발하고 테스트했습니다. Windows와 Linux는 테스트하지 않았습니다.</description>
+- 지원 언어: 영어, 한국어.</description>
 </ModMetaData>
