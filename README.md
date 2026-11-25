@@ -10,6 +10,10 @@ The condition window, opened with your own shortcut key:
 
 ![Condition window](docs/conditions.png)
 
+The pawn list next to it. Untick a pawn to hide its arrow (you can also click an arrow on the map), and tick it again to bring it back:
+
+![Pawn list](docs/pawn-list.png)
+
 ## Features
 
 - Pick any skills (modded skills included) and a minimum level for each one.
@@ -89,7 +93,7 @@ RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리
 
 ## 데모
 
-스크린샷은 위 Demo 섹션을 참고하세요. 첫 번째는 조건에 맞는 적대 림 위에 뜬 화살표 마크이고, 두 번째는 조건 창입니다.
+스크린샷은 위 Demo 섹션을 참고하세요. 첫 번째는 조건에 맞는 적대 림 위에 뜬 화살표 마크, 두 번째는 조건 창, 세 번째는 림 목록입니다. 림 목록에서 체크를 풀면 그 림의 화살표가 숨겨지고(맵의 화살표를 클릭해도 됩니다), 다시 체크하면 돌아옵니다.
 
 ## 주요 기능
 
