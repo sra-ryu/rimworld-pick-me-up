@@ -5,7 +5,7 @@ using Verse;
 
 namespace PickMeUp
 {
-    /// <summary>Dev-mode helpers to check the matching without the star marker.</summary>
+    /// <summary>Dev-mode helpers to check the matching without the arrow marker.</summary>
     public static class PickMeUpDebug
     {
         [DebugAction("Pick Me Up", "Log matching hostile pawns", false, false, false, false, false,

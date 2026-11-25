@@ -11,8 +11,8 @@
   <PMU_AllSkillsUsed>Every skill already has a condition.</PMU_AllSkillsUsed>
   <PMU_NoConditions>No conditions yet. Add one to start looking for pawns.</PMU_NoConditions>
   <PMU_RemoveCondition>Remove this condition</PMU_RemoveCondition>
-  <PMU_Enabled>Show star markers</PMU_Enabled>
+  <PMU_Enabled>Show arrow markers</PMU_Enabled>
   <PMU_EnabledTip>Turn the markers off without losing your conditions.</PMU_EnabledTip>
-  <PMU_MarkersOn>Pick Me Up: star markers on</PMU_MarkersOn>
-  <PMU_MarkersOff>Pick Me Up: star markers off</PMU_MarkersOff>
+  <PMU_MarkersOn>Pick Me Up: arrow markers on</PMU_MarkersOn>
+  <PMU_MarkersOff>Pick Me Up: arrow markers off</PMU_MarkersOff>
 </LanguageData>

@@ -19,7 +19,7 @@
 
   <KeyBindingDef>
     <defName>PickMeUp_ToggleMarkers</defName>
-    <label>Show/hide star markers</label>
+    <label>Show/hide arrow markers</label>
     <category>PickMeUp_Category</category>
   </KeyBindingDef>
 

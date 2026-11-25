@@ -6,5 +6,5 @@
   <supportedVersions>
     <li>1.7</li>
   </supportedVersions>
-  <description>Finds hostile pawns with the skills and levels you choose, and marks them with a star above their heads.</description>
+  <description>Finds hostile pawns with the skills and levels you choose, and marks them with an arrow above their heads.</description>
 </ModMetaData>

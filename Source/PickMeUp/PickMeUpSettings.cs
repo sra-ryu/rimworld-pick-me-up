@@ -6,7 +6,7 @@ namespace PickMeUp
     /// <summary>Everything that is remembered between game sessions.</summary>
     public class PickMeUpSettings : ModSettings
     {
-        /// <summary>Master switch for the star markers. The conditions are kept while it is off.</summary>
+        /// <summary>Master switch for the arrow markers. The conditions are kept while it is off.</summary>
         public bool enabled = true;
 
         /// <summary>true = every condition must match (AND), false = any one is enough (OR).</summary>
