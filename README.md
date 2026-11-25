@@ -36,6 +36,12 @@ The pawn list next to it. Untick a pawn to hide its arrow (you can also click an
 
 ## Getting Started
 
+### Steam Workshop
+
+Subscribe on the [Steam Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=3845908753), then enable **Pick Me Up** in the mod list and restart the game.
+
+### Build from source
+
 Prerequisites: RimWorld 1.7 and the [.NET 10 SDK](https://dotnet.microsoft.com/download). The project file looks for the game in the default macOS Steam location. On other setups, pass the path with `-p:RimWorldDir=...`.
 
 ```bash
@@ -125,7 +131,13 @@ RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리
 
 ## 시작하기
 
-필요한 것은 RimWorld 1.7과 .NET 10 SDK입니다. 프로젝트 파일은 macOS 기본 Steam 경로에서 게임을 찾습니다. 다른 환경에서는 `-p:RimWorldDir=...`로 경로를 지정하세요. 명령어는 위 Getting Started와 동일합니다.
+### Steam Workshop
+
+[Steam Workshop 페이지](https://steamcommunity.com/sharedfiles/filedetails/?id=3845908753)에서 구독한 뒤, 게임의 모드 목록에서 **Pick Me Up**을 켜고 게임을 재시작하면 됩니다.
+
+### 소스에서 빌드
+
+필요한 것은 RimWorld 1.7과 .NET 10 SDK입니다. 프로젝트 파일은 macOS 기본 Steam 경로에서 게임을 찾습니다. 다른 환경에서는 `-p:RimWorldDir=...`로 경로를 지정하세요. 명령어는 위 Build from source와 동일합니다.
 
 빌드한 뒤 게임에서 모드 목록의 **Pick Me Up**을 켜고 재시작하면 됩니다. `Assemblies/`의 `.dll`과 `.pdb`는 커밋하지 않으므로, 저장소를 새로 받으면 한 번 빌드해야 합니다.
 
