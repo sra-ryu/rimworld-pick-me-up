@@ -56,7 +56,7 @@ namespace PickMeUp
                 var addRect = new Rect(buttonRow.x, buttonRow.y, buttonRow.width - resetWidth - 6f, buttonRow.height);
                 if (Widgets.ButtonText(addRect, "PMU_AddCondition".Translate()))
                 {
-                    AddCondition();
+                    OpenAddMenu();
                 }
             }
             TooltipHandler.TipRegion(resetRect, "PMU_ResetConditionsTip".Translate());
@@ -159,24 +159,26 @@ namespace PickMeUp
             return DefDatabase<SkillDef>.AllDefsListForReading.Where(d => !used.Contains(d.defName));
         }
 
-        private static void AddCondition()
+        /// <summary>"Add condition" opens the skill list directly; picking one adds it as a new row.</summary>
+        private static void OpenAddMenu()
         {
-            SkillDef first = UnusedSkills(null).FirstOrDefault();
-            if (first == null)
-            {
-                return;
-            }
-            Settings.conditions.Add(new SkillCondition { skillDefName = first.defName });
+            OpenSkillMenu(UnusedSkills(null), def => Settings.conditions.Add(
+                new SkillCondition { skillDefName = def.defName }));
         }
 
+        /// <summary>Changes the skill of an existing row.</summary>
         private static void OpenSkillMenu(SkillCondition condition)
         {
+            OpenSkillMenu(UnusedSkills(condition), def => condition.skillDefName = def.defName);
+        }
+
+        private static void OpenSkillMenu(IEnumerable<SkillDef> skills, System.Action<SkillDef> onPick)
+        {
             var options = new List<FloatMenuOption>();
-            foreach (SkillDef def in UnusedSkills(condition))
+            foreach (SkillDef def in skills)
             {
                 SkillDef captured = def;
-                options.Add(new FloatMenuOption(def.skillLabel.CapitalizeFirst(),
-                    () => condition.skillDefName = captured.defName));
+                options.Add(new FloatMenuOption(def.skillLabel.CapitalizeFirst(), () => onPick(captured)));
             }
             if (options.Count > 0)
             {
