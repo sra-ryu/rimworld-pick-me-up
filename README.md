@@ -19,6 +19,8 @@ The pawn list next to it. Untick a pawn to hide its arrow (you can also click an
 ## Features
 
 - Pick any skills (modded skills included) and a minimum level for each one.
+- Pick a passion (none, minor or major) for any skill, shown as flame icons.
+- Pick traits (for example Tough or Kind) that a pawn must have. Traits are yes or no, so they have no level.
 - Combine the conditions with **AND** ("Medicine and Intellectual at level 8 or higher") or **OR** ("Medicine or Intellectual at level 8 or higher").
 - If a matching hostile pawn is on the map you are viewing, an arrow appears above their head.
 - A condition window you can open while playing, with a pawn list next to it that shows every matching pawn. Untick a pawn to hide its arrow, or just click the arrow on the map. You can show it again from the list.
@@ -64,7 +66,7 @@ The built `Assemblies/*.dll` and `*.pdb` files are not committed, so every fresh
 ## Usage
 
 1. Open `Options > Keyboard config`, find **Pick Me Up** and assign a key to **Open/close condition window** (and optionally **Show/hide arrow markers**).
-2. Press that key during play, click **Add condition**, choose a skill and drag the slider to the minimum level. Repeat for more skills.
+2. Press that key during play, click **Add skill** or **Add trait**, and choose one from the list. For a skill, drag the slider to the minimum level and click the flame icon to set a passion if you want one. Repeat for more.
 3. Choose **Match all conditions (AND)** or **Match any condition (OR)**.
 4. Matching hostile pawns get an arrow right away. The same editor is also available under `Options > Mod settings > Pick Me Up`.
 5. If you only like some of them, use the pawn list next to the window: untick a pawn to hide its arrow, or click the arrow on the map. **Show all** brings every hidden arrow back.
