@@ -11,11 +11,14 @@ This mod marks hostile pawns who have the skills you are looking for with an arr
 
 How to use
 1. Assign a key in Options > Keyboard config to open the mod window during the game.
-2. Set the skills and minimum levels you want in the mod window. Matching hostile pawns on the map you are viewing get an arrow above their heads.
+2. Add skills, traits or health conditions in the mod window. Matching hostile pawns on the map you are viewing get an arrow above their heads.
 
 Features
-- Combine the conditions with AND or OR.
-- The pawn list next to the condition window shows every matching pawn. Untick a pawn to hide its arrow, or just click the arrow on the map. You can show it again from the list.
+- Skills: pick any skill (modded skills included) with a minimum level and a passion (none, minor or major).
+- Traits: pick traits such as Tough or Kind. Traits with steps (e.g. Slowpoke, Fast walker, Jogger) are separate entries.
+- Health: leave out pawns with an illness, a missing part, an addiction or a scar. "No health issues" keeps only pawns with none of these and no pain. Health always applies and is not part of AND/OR.
+- Skills and traits each have their own AND/OR.
+- The pawn list next to the condition window shows every matching pawn. Untick a pawn to hide its arrow. You can show it again from the list.
 - A switch hides all arrows while keeping your conditions.
 - No Harmony or other mod dependencies.
 - Languages: English, Korean.
@@ -27,11 +30,14 @@ Features
 
 사용법
 1. 환경설정 > 키보드 조작에서 단축키를 등록하면, 게임 중에 모드 창을 열 수 있습니다.
-2. 모드 창에서 원하는 스킬과 최소 레벨을 정하면, 지금 보고 있는 맵의 적대 림 중 조건에 맞는 림 머리 위에 화살표가 표시됩니다.
+2. 모드 창에서 스킬, 트레잇, 건강 조건을 추가하면, 지금 보고 있는 맵의 적대 림 중 조건에 맞는 림 머리 위에 화살표가 표시됩니다.
 
 기능
-- 조건을 AND 또는 OR로 묶을 수 있습니다.
-- 조건 창 옆의 림 목록에서 조건에 맞는 림을 한눈에 보고, 체크를 풀어 그 림의 화살표를 숨길 수 있습니다. 맵의 화살표를 클릭해도 숨겨지며, 목록에서 다시 표시할 수 있습니다.
+- 스킬: 원하는 스킬(모드 스킬 포함)과 최소 레벨, 열정(없음, 보통, 대단함)을 지정합니다.
+- 트레잇: 강인함, 다정다감 같은 트레잇을 지정합니다. 단계가 있는 트레잇(예: 느림보, 가벼운 발, 신속)은 단계별로 따로 고를 수 있습니다.
+- 건강: 질병, 신체 결손, 중독, 흉터가 있는 림을 뺄 수 있습니다. "건강이슈 없음"을 고르면 이런 문제와 통증이 없는 림만 남깁니다. 건강 조건은 AND/OR와 상관없이 항상 적용됩니다.
+- 스킬과 트레잇은 각각 AND 또는 OR로 묶을 수 있습니다.
+- 조건 창 옆의 림 목록에서 조건에 맞는 림을 한눈에 보고, 체크를 풀어 그 림의 화살표를 숨길 수 있습니다. 목록에서 다시 표시할 수 있습니다.
 - 조건은 유지한 채 모든 화살표만 끄는 스위치도 있습니다.
 - Harmony 등 다른 모드에 의존하지 않습니다.
 - 지원 언어: 영어, 한국어.</description>
