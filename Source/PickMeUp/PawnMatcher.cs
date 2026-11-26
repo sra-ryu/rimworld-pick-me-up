@@ -60,7 +60,13 @@ namespace PickMeUp
         private static bool HasTrait(Pawn pawn, TraitCondition condition)
         {
             TraitDef def = condition.TraitDef;
-            return def != null && pawn.story?.traits != null && pawn.story.traits.HasTrait(def);
+            if (def == null || pawn.story?.traits == null)
+            {
+                return false;
+            }
+            // The exact step of the trait must match, e.g. Fast walker, not Jogger.
+            Trait trait = pawn.story.traits.GetTrait(def);
+            return trait != null && trait.Degree == condition.degree;
         }
 
         /// <summary>Every matching pawn on the given map, hostile ones only.</summary>

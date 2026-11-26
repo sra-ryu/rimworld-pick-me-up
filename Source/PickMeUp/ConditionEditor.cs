@@ -24,6 +24,34 @@ namespace PickMeUp
 
         private Vector2 scrollPosition;
 
+        // Whether the health checkbox popup is open, and where the "Add health" button is this frame.
+        private bool healthPanelOpen;
+        private Rect healthButtonRect;
+
+        // "Add skill" and "Add trait" button rects (this window's coordinates), and the open lists, if any.
+        private Rect skillButtonRect;
+        private Rect traitButtonRect;
+        private FloatMenu skillMenu;
+        private float skillMenuClosedAt = -10f;
+
+        // The open trait list, if any, and where it opens.
+        private FloatMenu traitMenu;
+        private float traitMenuClosedAt = -10f;
+        private Vector2 traitListAnchor;
+
+        // A click that closes a list also reaches the button it was opened from. Ignore that click, so the
+        // button closes the list instead of reopening it.
+        private const float ToggleGraceSeconds = 0.3f;
+
+        // How far right of the end of the button text the list opens, in UI units.
+        private const float SkillListExtraOffset = 24f;
+
+        private static readonly HealthKind[] HealthKinds =
+        {
+            HealthKind.Illness, HealthKind.MissingPart, HealthKind.Addiction, HealthKind.Scar,
+            HealthKind.NoIssue,
+        };
+
         public void Draw(Rect inRect)
         {
             var listing = new Listing_Standard();
@@ -62,15 +90,9 @@ namespace PickMeUp
             // [Add skill] [Add trait] [Add health]. The buttons share the row evenly.
             // Only the add buttons that still have something to add are shown.
             var adds = new List<KeyValuePair<string, Action>>();
-            if (UnusedSkills(null).Any())
-            {
-                adds.Add(new KeyValuePair<string, Action>("PMU_AddSkill", OpenAddSkillMenu));
-            }
-            if (UnusedTraits(null).Any())
-            {
-                adds.Add(new KeyValuePair<string, Action>("PMU_AddTrait", OpenAddTraitMenu));
-            }
-            adds.Add(new KeyValuePair<string, Action>("PMU_AddHealth", OpenAddHealthMenu));
+            adds.Add(new KeyValuePair<string, Action>("PMU_AddSkill", () => ToggleAddSkill()));
+            adds.Add(new KeyValuePair<string, Action>("PMU_AddTrait", () => ToggleAddTrait()));
+            adds.Add(new KeyValuePair<string, Action>("PMU_AddHealth", ToggleHealthPanel));
 
             Rect buttonRow = listing.GetRect(30f);
             const float gap = 6f;
@@ -78,6 +100,18 @@ namespace PickMeUp
             for (int i = 0; i < adds.Count; i++)
             {
                 var addRect = new Rect(buttonRow.x + i * (addWidth + gap), buttonRow.y, addWidth, buttonRow.height);
+                if (adds[i].Key == "PMU_AddHealth")
+                {
+                    healthButtonRect = addRect;
+                }
+                if (adds[i].Key == "PMU_AddSkill")
+                {
+                    skillButtonRect = addRect;
+                }
+                if (adds[i].Key == "PMU_AddTrait")
+                {
+                    traitButtonRect = addRect;
+                }
                 if (Widgets.ButtonText(addRect, adds[i].Key.Translate()))
                 {
                     adds[i].Value();
@@ -86,11 +120,13 @@ namespace PickMeUp
 
             listing.Gap(6f);
 
-            if (Settings.ConditionCount == 0)
+            // The hint is about skills only: it shows until the first skill is added.
+            if (Settings.conditions.Count == 0)
             {
                 GUI.color = Color.gray;
                 listing.Label("PMU_NoConditions".Translate());
                 GUI.color = Color.white;
+                DrawHealthPanel();
                 listing.End();
                 return;
             }
@@ -99,16 +135,15 @@ namespace PickMeUp
             // listing.End(): the listing works in a group, so its rects are relative to that group.
             Rect outRect = listing.GetRect(inRect.height - listing.CurHeight);
             DrawConditionList(outRect);
+            DrawHealthPanel();
             listing.End();
         }
 
-        /// <summary>Skill rows, then trait rows, then health rows.</summary>
+        /// <summary>Skill rows. Traits are picked in their own list, and health in its own panel.</summary>
         private void DrawConditionList(Rect outRect)
         {
             int skillCount = Settings.conditions.Count;
-            int traitCount = Settings.traitConditions.Count;
-            int healthCount = Settings.healthConditions.Count;
-            var view = new Rect(0f, 0f, outRect.width - 16f, (skillCount + traitCount + healthCount) * RowHeight);
+            var view = new Rect(0f, 0f, outRect.width - 16f, skillCount * RowHeight);
             Widgets.BeginScrollView(outRect, ref scrollPosition, view);
 
             int removeSkill = -1;
@@ -121,37 +156,10 @@ namespace PickMeUp
                 }
             }
 
-            int removeTrait = -1;
-            for (int j = 0; j < traitCount; j++)
-            {
-                var row = new Rect(0f, (skillCount + j) * RowHeight, view.width, RowHeight - 2f);
-                if (DrawTraitRow(row, Settings.traitConditions[j]))
-                {
-                    removeTrait = j;
-                }
-            }
-
-            int removeHealth = -1;
-            for (int k = 0; k < healthCount; k++)
-            {
-                var row = new Rect(0f, (skillCount + traitCount + k) * RowHeight, view.width, RowHeight - 2f);
-                if (DrawHealthRow(row, Settings.healthConditions[k]))
-                {
-                    removeHealth = k;
-                }
-            }
 
             if (removeSkill >= 0)
             {
                 Settings.conditions.RemoveAt(removeSkill);
-            }
-            if (removeTrait >= 0)
-            {
-                Settings.traitConditions.RemoveAt(removeTrait);
-            }
-            if (removeHealth >= 0)
-            {
-                Settings.healthConditions.RemoveAt(removeHealth);
             }
 
             Widgets.EndScrollView();
@@ -194,45 +202,6 @@ namespace PickMeUp
             return Widgets.ButtonImage(deleteRect, TexButton.Delete);
         }
 
-        /// <summary>Draws one trait row. Traits are yes/no, so there is only a name and a delete button.</summary>
-        private bool DrawTraitRow(Rect row, TraitCondition condition)
-        {
-            // [trait dropdown]                        [x]
-            var traitRect = new Rect(row.x, row.y, SkillButtonWidth + 6f + PassionButtonWidth, row.height);
-            var deleteRect = DeleteRect(row);
-
-            if (Widgets.ButtonText(traitRect, TraitLabel(condition)))
-            {
-                OpenTraitMenu(condition);
-            }
-
-            TooltipHandler.TipRegion(deleteRect, "PMU_RemoveCondition".Translate());
-            return Widgets.ButtonImage(deleteRect, TexButton.Delete);
-        }
-
-        /// <summary>
-        /// Draws one health row: [kind: value dropdown] [x]. "No pain" has no value, so it is only a label.
-        /// </summary>
-        private bool DrawHealthRow(Rect row, HealthCondition condition)
-        {
-            var valueRect = new Rect(row.x, row.y, SkillButtonWidth + 6f + PassionButtonWidth, row.height);
-            var deleteRect = DeleteRect(row);
-
-            if (condition.kind == HealthKind.NoPain)
-            {
-                Text.Anchor = TextAnchor.MiddleLeft;
-                Widgets.Label(valueRect, HealthLabel(condition));
-                Text.Anchor = TextAnchor.UpperLeft;
-            }
-            else if (Widgets.ButtonText(valueRect, HealthLabel(condition)))
-            {
-                OpenHealthValueMenu(condition);
-            }
-
-            TooltipHandler.TipRegion(deleteRect, "PMU_RemoveCondition".Translate());
-            return Widgets.ButtonImage(deleteRect, TexButton.Delete);
-        }
-
         private static Rect DeleteRect(Rect row)
         {
             return new Rect(row.xMax - DeleteSize, row.y + (row.height - DeleteSize) / 2f, DeleteSize, DeleteSize);
@@ -248,142 +217,259 @@ namespace PickMeUp
             return condition.skillDefName ?? "?";
         }
 
-        private static string TraitLabel(TraitCondition condition)
+        public static string HealthKindLabel(HealthKind kind)
         {
-            TraitDef def = condition.TraitDef;
-            if (def != null)
+            switch (kind)
             {
-                return TraitCondition.DisplayName(def);
-            }
-            return condition.traitDefName ?? "?";
-        }
-
-        /// <summary>"Kind: value", or "any" when no value is set. Pain is shown on its own.</summary>
-        private static string HealthLabel(HealthCondition condition)
-        {
-            switch (condition.kind)
-            {
-                case HealthKind.Illness:
-                    return "PMU_KindIllness".Translate() + ": " + HealthValueLabel(condition);
-                case HealthKind.MissingPart:
-                    return "PMU_KindMissingPart".Translate() + ": " + HealthValueLabel(condition);
-                case HealthKind.Addiction:
-                    return "PMU_KindAddiction".Translate() + ": " + HealthValueLabel(condition);
-                default:
-                    return "PMU_NoPain".Translate();
+                case HealthKind.Illness: return "PMU_KindIllness".Translate();
+                case HealthKind.MissingPart: return "PMU_KindMissingPart".Translate();
+                case HealthKind.Addiction: return "PMU_KindAddiction".Translate();
+                case HealthKind.Scar: return "PMU_KindScar".Translate();
+                default: return "PMU_NoIssue".Translate();
             }
         }
 
-        private static string HealthValueLabel(HealthCondition condition)
-        {
-            if (condition.defName == null)
-            {
-                switch (condition.kind)
-                {
-                    case HealthKind.Illness: return "PMU_AnyIllness".Translate();
-                    case HealthKind.MissingPart: return "PMU_AnyMissingPart".Translate();
-                    default: return "PMU_AnyAddiction".Translate();
-                }
-            }
-
-            Def def = DefForHealth(condition);
-            return def != null ? HealthCondition.DisplayName(def) : condition.defName;
-        }
-
-        private static Def DefForHealth(HealthCondition condition)
-        {
-            switch (condition.kind)
-            {
-                case HealthKind.Illness: return DefDatabase<HediffDef>.GetNamedSilentFail(condition.defName);
-                case HealthKind.MissingPart: return DefDatabase<BodyPartDef>.GetNamedSilentFail(condition.defName);
-                case HealthKind.Addiction: return DefDatabase<ChemicalDef>.GetNamedSilentFail(condition.defName);
-                default: return null;
-            }
-        }
-
-        /// <summary>Skills not already used by another condition, so a skill appears at most once.</summary>
-        private static IEnumerable<SkillDef> UnusedSkills(SkillCondition except)
-        {
-            var used = new HashSet<string>(Settings.conditions
-                .Where(c => c != except && c.skillDefName != null)
-                .Select(c => c.skillDefName));
-            return DefDatabase<SkillDef>.AllDefsListForReading.Where(d => !used.Contains(d.defName));
-        }
-
-        /// <summary>Traits not already used by another condition, so a trait appears at most once.</summary>
-        private static IEnumerable<TraitDef> UnusedTraits(TraitCondition except)
-        {
-            var used = new HashSet<string>(Settings.traitConditions
-                .Where(c => c != except && c.traitDefName != null)
-                .Select(c => c.traitDefName));
-            return DefDatabase<TraitDef>.AllDefsListForReading
-                .Where(d => !used.Contains(d.defName))
-                .OrderBy(d => TraitCondition.DisplayName(d));
-        }
-
-        /// <summary>"Add skill" opens the skill list directly; picking one adds it as a new row.</summary>
-        private static void OpenAddSkillMenu()
-        {
-            OpenPickMenu(UnusedSkills(null), def => def.skillLabel.CapitalizeFirst(), def =>
-                Settings.conditions.Add(new SkillCondition { skillDefName = def.defName }));
-        }
-
-        /// <summary>"Add trait" opens the trait list directly; picking one adds it as a new row.</summary>
-        private static void OpenAddTraitMenu()
-        {
-            OpenPickMenu(UnusedTraits(null), def => TraitCondition.DisplayName(def), def =>
-                Settings.traitConditions.Add(new TraitCondition { traitDefName = def.defName }));
-        }
+        /// <summary>Every skill. The same skill can be added more than once.</summary>
+        private static IEnumerable<SkillDef> AllSkills => DefDatabase<SkillDef>.AllDefsListForReading;
 
         /// <summary>
-        /// "Add health" lists the kinds. Picking one adds a row that means "any" of that kind;
-        /// the row's own dropdown then narrows it down to a specific illness, part or drug.
+        /// The health checkboxes, floating right under the "Add health" button. Drawn last so they sit on top
+        /// of the condition list. Clicking outside the popup and the button closes it.
+        /// Illness, missing part and addiction can be combined; "No health issues" stands alone.
         /// </summary>
-        private static void OpenAddHealthMenu()
+        private void DrawHealthPanel()
         {
-            var kinds = new[] { HealthKind.Illness, HealthKind.MissingPart, HealthKind.Addiction, HealthKind.NoPain };
-            OpenPickMenu(kinds, kind => HealthLabel(new HealthCondition { kind = kind }), kind =>
-                Settings.healthConditions.Add(new HealthCondition { kind = kind }));
+            if (!healthPanelOpen)
+            {
+                return;
+            }
+
+            const float rowHeight = 26f;
+            const float padding = 8f;
+            // Aligned to the button's right edge and grown leftwards, so it stays inside the window.
+            float panelWidth = Mathf.Max(healthButtonRect.width, 200f);
+            var panelRect = new Rect(healthButtonRect.xMax - panelWidth, healthButtonRect.yMax + 4f,
+                panelWidth, HealthKinds.Length * rowHeight + padding * 2f);
+
+            Vector2 mouse = Event.current.mousePosition;
+            if (Event.current.type == EventType.MouseDown
+                && !panelRect.Contains(mouse) && !healthButtonRect.Contains(mouse))
+            {
+                healthPanelOpen = false;
+                return;
+            }
+
+            Widgets.DrawWindowBackground(panelRect);
+            for (int i = 0; i < HealthKinds.Length; i++)
+            {
+                HealthKind kind = HealthKinds[i];
+                var row = new Rect(panelRect.x + padding, panelRect.y + padding + i * rowHeight,
+                    panelRect.width - padding * 2f, rowHeight);
+
+                bool on = IsHealthKindOn(kind);
+                bool before = on;
+                Widgets.CheckboxLabeled(row, HealthKindLabel(kind), ref on);
+                if (on != before)
+                {
+                    SetHealthKind(kind, on);
+                }
+            }
+        }
+
+        private static bool IsHealthKindOn(HealthKind kind)
+        {
+            return Settings.healthConditions.Any(h => h.kind == kind);
+        }
+
+        private static void SetHealthKind(HealthKind kind, bool on)
+        {
+            if (kind == HealthKind.NoIssue)
+            {
+                // "No health issues" is exclusive: it replaces everything else, or is simply removed.
+                Settings.healthConditions.Clear();
+                if (on)
+                {
+                    Settings.healthConditions.Add(new HealthCondition { kind = HealthKind.NoIssue });
+                }
+                return;
+            }
+
+            Settings.healthConditions.RemoveAll(h => h.kind == kind);
+            if (on)
+            {
+                Settings.healthConditions.RemoveAll(h => h.kind == HealthKind.NoIssue);
+                Settings.healthConditions.Add(new HealthCondition { kind = kind });
+            }
         }
 
         /// <summary>Changes the skill of an existing row.</summary>
         private static void OpenSkillMenu(SkillCondition condition)
         {
-            OpenPickMenu(UnusedSkills(condition), def => def.skillLabel.CapitalizeFirst(),
+            OpenPickMenu(AllSkills, def => def.skillLabel.CapitalizeFirst(),
                 def => condition.skillDefName = def.defName);
         }
 
-        /// <summary>Changes the trait of an existing row.</summary>
-        private static void OpenTraitMenu(TraitCondition condition)
+        /// <summary>"Add health": unfolds or folds the checkboxes, and closes the skill and trait lists.</summary>
+        private void ToggleHealthPanel()
         {
-            OpenPickMenu(UnusedTraits(condition), def => TraitCondition.DisplayName(def),
-                def => condition.traitDefName = def.defName);
+            CloseMenu(ref skillMenu);
+            CloseMenu(ref traitMenu);
+            healthPanelOpen = !healthPanelOpen;
+        }
+
+        private static void CloseMenu(ref FloatMenu menu)
+        {
+            if (menu != null && Find.WindowStack.Windows.Contains(menu))
+            {
+                menu.Close(false);
+            }
+            menu = null;
+        }
+
+        /// <summary>"Add skill": opens the skill list next to its button, or closes it when it is open.</summary>
+        private void ToggleAddSkill()
+        {
+            healthPanelOpen = false;
+            if (skillMenu != null && Find.WindowStack.Windows.Contains(skillMenu))
+            {
+                skillMenu.Close(false);
+                return;
+            }
+            if (Time.realtimeSinceStartup - skillMenuClosedAt < ToggleGraceSeconds)
+            {
+                return;
+            }
+
+            var options = AllSkills.Select(def => new FloatMenuOption(
+                def.skillLabel.CapitalizeFirst(),
+                () => Settings.conditions.Add(new SkillCondition { skillDefName = def.defName }))).ToList();
+            if (options.Count == 0)
+            {
+                return;
+            }
+
+            skillMenu = new PlacedFloatMenu(options, ButtonListAnchor(skillButtonRect, "PMU_AddSkill", 2f), centered: false)
+            {
+                onClose = () => skillMenuClosedAt = Time.realtimeSinceStartup,
+            };
+            Find.WindowStack.Add(skillMenu);
+        }
+
+        /// <summary>"Add trait": opens the trait list next to its button, or closes it when it is open.</summary>
+        private void ToggleAddTrait()
+        {
+            healthPanelOpen = false;
+            if (traitMenu != null && Find.WindowStack.Windows.Contains(traitMenu))
+            {
+                traitMenu.Close(false);
+                return;
+            }
+            if (Time.realtimeSinceStartup - traitMenuClosedAt < ToggleGraceSeconds)
+            {
+                return;
+            }
+
+            traitListAnchor = ButtonListAnchor(traitButtonRect, "PMU_AddTrait", 1f);
+            OpenTraitMenu();
         }
 
         /// <summary>
-        /// Changes the value of a health row. The first entry is "any" (null), then every specific def.
+        /// The trait list, in the game's own list style. Selected traits are green. Picking a trait toggles it,
+        /// and the list opens again in the same place so the colours are up to date.
         /// </summary>
-        private static void OpenHealthValueMenu(HealthCondition condition)
+        private void OpenTraitMenu()
         {
-            IEnumerable<Def> defs;
-            switch (condition.kind)
-            {
-                case HealthKind.Illness: defs = HealthCondition.IllnessDefs; break;
-                case HealthKind.MissingPart: defs = HealthCondition.BodyPartDefs; break;
-                case HealthKind.Addiction: defs = HealthCondition.ChemicalDefs; break;
-                default: return;
-            }
-
-            var values = new List<string> { null };
-            values.AddRange(defs.Select(d => d.defName));
-            OpenPickMenu(values, name => HealthValueLabel(new HealthCondition
+            // One entry per step of each trait, so e.g. Slowpoke, Fast walker and Jogger are separate.
+            var steps = DefDatabase<TraitDef>.AllDefsListForReading
+                .SelectMany(def => TraitCondition.DegreesOf(def).Select(degree => new { def, degree }))
+                .OrderBy(e => TraitCondition.DisplayName(e.def, e.degree))
+                .ToList();
+            var options = steps.Select(e =>
                 {
-                    kind = condition.kind,
-                    defName = name,
-                }),
-                name => condition.defName = name);
+                    bool selected = IsTraitSelected(e.def, e.degree);
+                    string name = TraitCondition.DisplayName(e.def, e.degree);
+                    string label = selected ? "<color=#00FF00>" + name + "</color>" : name;
+                    return new FloatMenuOption(label, () =>
+                    {
+                        ToggleTrait(e.def, e.degree, selected);
+                        OpenTraitMenu();
+                    });
+                })
+                .ToList();
+
+            traitMenu = new PlacedFloatMenu(options, traitListAnchor, centered: false)
+            {
+                onClose = () => traitMenuClosedAt = Time.realtimeSinceStartup,
+            };
+            Find.WindowStack.Add(traitMenu);
         }
 
+        private static bool IsTraitSelected(TraitDef def, int degree)
+        {
+            return Settings.traitConditions.Any(t => t.traitDefName == def.defName && t.degree == degree);
+        }
+
+        private static void ToggleTrait(TraitDef def, int degree, bool selected)
+        {
+            if (selected)
+            {
+                Settings.traitConditions.RemoveAll(t => t.traitDefName == def.defName && t.degree == degree);
+            }
+            else
+            {
+                Settings.traitConditions.Add(new TraitCondition { traitDefName = def.defName, degree = degree });
+            }
+        }
+
+        /// <summary>
+        /// Screen position just below the right end of a button's text, moved a little further right and down.
+        /// The button is in this window's coordinates, so the window's own position on screen is added.
+        /// </summary>
+        private static Vector2 ButtonListAnchor(Rect buttonRect, string buttonKey, float buttonHeightsBelow)
+        {
+            Window host = Find.WindowStack.Windows.LastOrDefault(w =>
+                !(w is FloatMenu) && !(w is Window_PassionPicker));
+            Vector2 origin = host != null ? host.windowRect.position : Vector2.zero;
+            float textEndX = buttonRect.center.x + Text.CalcSize(buttonKey.Translate()).x / 2f;
+            return origin + new Vector2(textEndX + SkillListExtraOffset,
+                buttonRect.yMax + 2f + buttonHeightsBelow * buttonRect.height);
+        }
+
+        /// <summary>The game's own FloatMenu, placed at a given screen position (or centered) instead of at the mouse.</summary>
+        private class PlacedFloatMenu : FloatMenu
+        {
+            private readonly Vector2 at;
+            private readonly bool centered;
+
+            public Action onClose;
+
+            public PlacedFloatMenu(List<FloatMenuOption> options, Vector2 at, bool centered) : base(options)
+            {
+                this.at = at;
+                this.centered = centered;
+                vanishIfMouseDistant = false;
+            }
+
+            public override void PreOpen()
+            {
+                base.PreOpen();
+                float w = windowRect.width;
+                float h = windowRect.height;
+                float x = centered ? (UI.screenWidth - w) / 2f : at.x;
+                float y = centered ? (UI.screenHeight - h) / 2f : at.y;
+                x = Mathf.Clamp(x, 0f, Mathf.Max(0f, UI.screenWidth - w));
+                y = Mathf.Clamp(y, 0f, Mathf.Max(0f, UI.screenHeight - h));
+                windowRect = new Rect(x, y, w, h);
+            }
+
+            public override void PostClose()
+            {
+                base.PostClose();
+                onClose?.Invoke();
+            }
+        }
+
+        /// <summary>Opens the game's list of choices at the mouse, as before.</summary>
         private static void OpenPickMenu<T>(IEnumerable<T> items, Func<T, string> label, Action<T> onPick)
         {
             var options = new List<FloatMenuOption>();

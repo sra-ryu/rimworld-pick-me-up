@@ -13,49 +13,56 @@ namespace PickMeUp
         Illness,
         /// <summary>A missing organ or limb.</summary>
         MissingPart,
+        /// <summary>A permanent scar left by a healed injury (scratch, cut, bite, ...).</summary>
+        Scar,
         /// <summary>An addiction to a drug.</summary>
         Addiction,
-        /// <summary>Pawns with any pain are left out. Has no value.</summary>
-        NoPain,
+        /// <summary>No illness, no missing part, no addiction and no pain. Has no value.</summary>
+        NoIssue,
     }
 
     /// <summary>
-    /// One health rule. defName is the specific illness, body part or chemical. When it is null the
-    /// rule means "any of this kind". NoPain has no value.
+    /// One health rule. Illness, MissingPart and Addiction leave out every pawn that has that kind of
+    /// issue (any illness, any missing part, any addiction). NoIssue keeps only pawns with no issues.
     /// </summary>
     public class HealthCondition : IExposable
     {
         public HealthKind kind = HealthKind.Illness;
-        public string defName;
 
         public void ExposeData()
         {
             Scribe_Values.Look(ref kind, "kind", HealthKind.Illness);
-            Scribe_Values.Look(ref defName, "def");
         }
 
-        /// <summary>True when the pawn meets this rule.</summary>
+        /// <summary>
+        /// True when the pawn meets this rule. Only the health items the game shows (Hediff.Visible) are used,
+        /// so things that are not listed in the Health tab (for example a race's built-in drug need) are ignored.
+        /// </summary>
         public bool IsMetBy(Pawn pawn)
         {
-            HediffSet hediffs = pawn.health?.hediffSet;
-            if (hediffs == null)
+            HediffSet hediffSet = pawn.health?.hediffSet;
+            if (hediffSet == null)
             {
                 return false;
             }
 
+            List<Hediff> shown = hediffSet.hediffs.Where(h => h.Visible).ToList();
             switch (kind)
             {
                 case HealthKind.Illness:
-                    return hediffs.hediffs.Any(h => h.def != null && IsIllnessDef(h.def)
-                        && (defName == null || h.def.defName == defName));
+                    return !shown.Any(h => IsIllnessDef(h.def));
                 case HealthKind.MissingPart:
-                    return hediffs.hediffs.OfType<Hediff_MissingPart>()
-                        .Any(h => defName == null || h.Part?.def?.defName == defName);
+                    return !shown.OfType<Hediff_MissingPart>().Any();
                 case HealthKind.Addiction:
-                    return hediffs.hediffs.OfType<Hediff_Addiction>()
-                        .Any(h => defName == null || h.Chemical?.defName == defName);
-                case HealthKind.NoPain:
-                    return hediffs.PainTotal <= 0f;
+                    return !shown.Any(IsAddiction);
+                case HealthKind.Scar:
+                    return !shown.Any(IsScar);
+                case HealthKind.NoIssue:
+                    return !shown.Any(h => IsIllnessDef(h.def))
+                        && !shown.OfType<Hediff_MissingPart>().Any()
+                        && !shown.Any(IsAddiction)
+                        && !shown.Any(IsScar)
+                        && hediffSet.PainTotal <= 0f;
                 default:
                     return false;
             }
@@ -73,22 +80,22 @@ namespace PickMeUp
                 && !typeof(Hediff_Injury).IsAssignableFrom(type)
                 && !typeof(Hediff_MissingPart).IsAssignableFrom(type)
                 && !typeof(Hediff_AddedPart).IsAssignableFrom(type)
-                && !typeof(Hediff_Addiction).IsAssignableFrom(type);
+                && !typeof(Hediff_Addiction).IsAssignableFrom(type)
+                && !typeof(Hediff_ChemicalDependency).IsAssignableFrom(type);
         }
 
-        public static IEnumerable<HediffDef> IllnessDefs =>
-            DefDatabase<HediffDef>.AllDefsListForReading.Where(IsIllnessDef).OrderBy(DisplayName);
-
-        public static IEnumerable<BodyPartDef> BodyPartDefs =>
-            DefDatabase<BodyPartDef>.AllDefsListForReading.OrderBy(DisplayName);
-
-        public static IEnumerable<ChemicalDef> ChemicalDefs =>
-            DefDatabase<ChemicalDef>.AllDefsListForReading.OrderBy(DisplayName);
-
-        /// <summary>The translated name of a def, with its first letter capitalised.</summary>
-        public static string DisplayName(Def def)
+        /// <summary>A healed injury that stayed as a scar.</summary>
+        public static bool IsScar(Hediff hediff)
         {
-            return (def.label ?? def.defName).CapitalizeFirst();
+            return hediff is Hediff_Injury injury && injury.IsPermanent();
+        }
+
+        /// <summary>
+        /// Drug dependencies: normal addictions, and the drug needs some xenotypes have (GeneticDrugNeed).
+        /// </summary>
+        public static bool IsAddiction(Hediff hediff)
+        {
+            return hediff is Hediff_Addiction || hediff is Hediff_ChemicalDependency;
         }
     }
 }

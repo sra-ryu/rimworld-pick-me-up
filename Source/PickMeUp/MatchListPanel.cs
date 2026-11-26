@@ -113,10 +113,14 @@ namespace PickMeUp
             GUI.color = hidden ? Color.gray : Color.white;
             Text.Font = GameFont.Small;
             Widgets.Label(new Rect(textRect.x, textRect.y + 3f, textRect.width, 22f), pawn.LabelShortCap);
+            string summary = SkillSummary(pawn);
             Text.Font = GameFont.Tiny;
-            Widgets.Label(new Rect(textRect.x, textRect.y + 24f, textRect.width, 18f), SkillSummary(pawn));
+            Widgets.Label(new Rect(textRect.x, textRect.y + 24f, textRect.width, 18f), summary);
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
+
+            // The summary is cut off when there are many skills, so hovering shows all of it, in a smaller size.
+            TooltipHandler.TipRegion(textRect, "<size=14>" + summary + "</size>");
 
             TooltipHandler.TipRegion(checkRect, "PMU_ArrowCheckboxTip".Translate());
             bool shown = !hidden;
