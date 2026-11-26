@@ -1,6 +1,7 @@
 using System.Text;
 using LudeonTK;
 using RimWorld;
+using System.Linq;
 using Verse;
 
 namespace PickMeUp
@@ -36,6 +37,17 @@ namespace PickMeUp
                         sb.Append($" {def.defName}={pawn.skills.GetSkill(def).Level}");
                     }
                 }
+            }
+            // Health diagnosis: the health items each hostile pawn has, and which of them count as an illness.
+            sb.Append("\nHealth items of hostile pawns:");
+            foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned.Where(PawnMatcher.IsCandidate))
+            {
+                sb.Append($"\n  {pawn.LabelShort}:");
+                foreach (Hediff h in pawn.health.hediffSet.hediffs)
+                {
+                    sb.Append($" {h.def.defName}[{h.def.hediffClass?.Name}, visible={h.Visible}, isBad={h.def.isBad}, illness={HealthCondition.IsIllnessDef(h.def)}]");
+                }
+                sb.Append($" painTotal={pawn.health.hediffSet.PainTotal:0.00}");
             }
             Log.Message(sb.ToString());
         }
