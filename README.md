@@ -12,7 +12,7 @@ The condition window, opened with your own shortcut key:
 
 ![Condition window](docs/conditions.png)
 
-The pawn list next to it. Untick a pawn to hide its arrow (you can also click an arrow on the map), and tick it again to bring it back:
+The pawn list next to it. Untick a pawn to hide its arrow, and tick it again to bring it back:
 
 ![Pawn list](docs/pawn-list.png)
 
@@ -21,9 +21,10 @@ The pawn list next to it. Untick a pawn to hide its arrow (you can also click an
 - Pick any skills (modded skills included) and a minimum level for each one.
 - Pick a passion (none, minor or major) for any skill, shown as flame icons.
 - Pick traits (for example Tough or Kind) that a pawn must have. Traits are yes or no, so they have no level.
+- Pick health conditions: any illness or a specific one, any missing body part or a specific one, any addiction or a specific drug, and "no pain" (pawns in any pain are left out).
 - Combine the conditions with **AND** ("Medicine and Intellectual at level 8 or higher") or **OR** ("Medicine or Intellectual at level 8 or higher").
 - If a matching hostile pawn is on the map you are viewing, an arrow appears above their head.
-- A condition window you can open while playing, with a pawn list next to it that shows every matching pawn. Untick a pawn to hide its arrow, or just click the arrow on the map. You can show it again from the list.
+- A condition window you can open while playing, with a pawn list next to it that shows every matching pawn. Untick a pawn to hide its arrow. You can show it again from the list.
 - A switch to hide all arrows without losing your conditions.
 - No keyboard shortcut is assigned by default. You choose your own keys.
 - Pawns who can never do a skill (for example, incapable of violence) do not match that skill. Prisoners and slaves of your colony are never marked.
@@ -69,7 +70,7 @@ The built `Assemblies/*.dll` and `*.pdb` files are not committed, so every fresh
 2. Press that key during play, click **Add skill** or **Add trait**, and choose one from the list. For a skill, drag the slider to the minimum level and click the flame icon to set a passion if you want one. Repeat for more.
 3. Choose **Match all conditions (AND)** or **Match any condition (OR)**.
 4. Matching hostile pawns get an arrow right away. The same editor is also available under `Options > Mod settings > Pick Me Up`.
-5. If you only like some of them, use the pawn list next to the window: untick a pawn to hide its arrow, or click the arrow on the map. **Show all** brings every hidden arrow back.
+5. If you only like some of them, use the pawn list next to the window: untick a pawn to hide its arrow. **Show all** brings every hidden arrow back.
 
 For example, with `Shooting 10` and `Melee 10` set to OR, any raider who is level 10 or higher in either skill is marked. Switch to AND and only raiders who reach both are marked.
 
