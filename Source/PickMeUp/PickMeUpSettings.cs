@@ -9,8 +9,11 @@ namespace PickMeUp
         /// <summary>Master switch for the arrow markers. The conditions are kept while it is off.</summary>
         public bool enabled = true;
 
-        /// <summary>true = every condition must match (AND), false = any one is enough (OR).</summary>
+        /// <summary>Skills: true = every skill must match (AND), false = any one is enough (OR).</summary>
         public bool matchAll = true;
+
+        /// <summary>Traits: true = every trait must match (AND), false = any one is enough (OR).</summary>
+        public bool matchAllTraits = true;
 
         public List<SkillCondition> conditions = new List<SkillCondition>();
 
@@ -33,6 +36,7 @@ namespace PickMeUp
         {
             Scribe_Values.Look(ref enabled, "enabled", true);
             Scribe_Values.Look(ref matchAll, "matchAll", true);
+            Scribe_Values.Look(ref matchAllTraits, "matchAllTraits", true);
             Scribe_Collections.Look(ref conditions, "conditions", LookMode.Deep);
             Scribe_Collections.Look(ref traitConditions, "traitConditions", LookMode.Deep);
             Scribe_Collections.Look(ref healthConditions, "healthConditions", LookMode.Deep);

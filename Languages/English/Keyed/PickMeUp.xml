@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <PMU_SettingsTitle>Pick Me Up</PMU_SettingsTitle>
-  <PMU_MatchMode>How to combine the conditions</PMU_MatchMode>
-  <PMU_MatchAll>Match all conditions (AND)</PMU_MatchAll>
+  <PMU_CombineSkills>Skills</PMU_CombineSkills>
+  <PMU_CombineTraits>Traits</PMU_CombineTraits>
+  <PMU_AndShort>AND</PMU_AndShort>
+  <PMU_OrShort>OR</PMU_OrShort>
   <PMU_MatchAllTip>A pawn is picked only if every condition below is met.</PMU_MatchAllTip>
-  <PMU_MatchAny>Match any condition (OR)</PMU_MatchAny>
   <PMU_MatchAnyTip>A pawn is picked if at least one condition below is met.</PMU_MatchAnyTip>
   <PMU_Conditions>Conditions (skills, traits and health)</PMU_Conditions>
   <PMU_AddSkill>Add skill</PMU_AddSkill>

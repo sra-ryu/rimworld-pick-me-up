@@ -72,17 +72,9 @@ namespace PickMeUp
             }
             listing.GapLine();
 
-            listing.Label("PMU_MatchMode".Translate());
-            if (listing.RadioButton("PMU_MatchAll".Translate(), Settings.matchAll,
-                    tooltip: "PMU_MatchAllTip".Translate()))
-            {
-                Settings.matchAll = true;
-            }
-            if (listing.RadioButton("PMU_MatchAny".Translate(), !Settings.matchAll,
-                    tooltip: "PMU_MatchAnyTip".Translate()))
-            {
-                Settings.matchAll = false;
-            }
+            // Skills and traits each have their own AND/OR. Health is not listed here: it always applies.
+            DrawMatchRow(listing, "PMU_CombineSkills", ref Settings.matchAll);
+            DrawMatchRow(listing, "PMU_CombineTraits", ref Settings.matchAllTraits);
 
             listing.GapLine();
             listing.Label("PMU_Conditions".Translate());
@@ -137,6 +129,29 @@ namespace PickMeUp
             DrawConditionList(outRect);
             DrawHealthPanel();
             listing.End();
+        }
+
+        /// <summary>One row: a label on the left, and AND / OR choices on the right.</summary>
+        private static void DrawMatchRow(Listing_Standard listing, string labelKey, ref bool matchAll)
+        {
+            Rect row = listing.GetRect(26f);
+            var andRect = new Rect(row.xMax - 150f, row.y, 70f, row.height);
+            var orRect = new Rect(row.xMax - 70f, row.y, 70f, row.height);
+
+            Text.Anchor = TextAnchor.MiddleLeft;
+            Widgets.Label(new Rect(row.x, row.y, row.width - 160f, row.height), labelKey.Translate());
+            Text.Anchor = TextAnchor.UpperLeft;
+
+            TooltipHandler.TipRegion(andRect, "PMU_MatchAllTip".Translate());
+            if (Widgets.RadioButtonLabeled(andRect, "PMU_AndShort".Translate(), matchAll))
+            {
+                matchAll = true;
+            }
+            TooltipHandler.TipRegion(orRect, "PMU_MatchAnyTip".Translate());
+            if (Widgets.RadioButtonLabeled(orRect, "PMU_OrShort".Translate(), !matchAll))
+            {
+                matchAll = false;
+            }
         }
 
         /// <summary>Skill rows. Traits are picked in their own list, and health in its own panel.</summary>

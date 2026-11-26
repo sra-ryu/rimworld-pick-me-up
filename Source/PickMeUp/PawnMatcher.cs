@@ -27,6 +27,10 @@ namespace PickMeUp
             return Matches(pawn, PickMeUpMod.Settings);
         }
 
+        /// <summary>
+        /// Skills are combined with their own AND/OR, traits with theirs, and health always applies:
+        /// the pawn must pass the skill group, the trait group and every health rule.
+        /// </summary>
         public static bool Matches(Pawn pawn, PickMeUpSettings settings)
         {
             if (settings == null || settings.ConditionCount == 0 || pawn?.skills == null)
@@ -34,10 +38,19 @@ namespace PickMeUp
                 return false; // nothing to look for
             }
 
-            IEnumerable<bool> results = settings.conditions.Select(c => Meets(pawn, c))
-                .Concat(settings.traitConditions.Select(t => HasTrait(pawn, t)))
-                .Concat(settings.healthConditions.Select(h => h.IsMetBy(pawn)));
-            return settings.matchAll ? results.All(r => r) : results.Any(r => r);
+            bool skillsOk = settings.conditions.Count == 0
+                || (settings.matchAll
+                    ? settings.conditions.All(c => Meets(pawn, c))
+                    : settings.conditions.Any(c => Meets(pawn, c)));
+
+            bool traitsOk = settings.traitConditions.Count == 0
+                || (settings.matchAllTraits
+                    ? settings.traitConditions.All(t => HasTrait(pawn, t))
+                    : settings.traitConditions.Any(t => HasTrait(pawn, t)));
+
+            bool healthOk = settings.healthConditions.All(h => h.IsMetBy(pawn));
+
+            return skillsOk && traitsOk && healthOk;
         }
 
         private static bool Meets(Pawn pawn, SkillCondition condition)

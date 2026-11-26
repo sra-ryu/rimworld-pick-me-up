@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <PMU_SettingsTitle>Pick Me Up</PMU_SettingsTitle>
-  <PMU_MatchMode>조건을 합치는 방식</PMU_MatchMode>
-  <PMU_MatchAll>모든 조건 만족 (AND)</PMU_MatchAll>
+  <PMU_CombineSkills>스킬</PMU_CombineSkills>
+  <PMU_CombineTraits>트레잇</PMU_CombineTraits>
+  <PMU_AndShort>AND</PMU_AndShort>
+  <PMU_OrShort>OR</PMU_OrShort>
   <PMU_MatchAllTip>아래 조건을 모두 만족하는 림만 선택합니다.</PMU_MatchAllTip>
-  <PMU_MatchAny>하나라도 만족 (OR)</PMU_MatchAny>
   <PMU_MatchAnyTip>아래 조건 중 하나라도 만족하는 림을 선택합니다.</PMU_MatchAnyTip>
   <PMU_Conditions>조건 (스킬, 트레잇, 건강)</PMU_Conditions>
   <PMU_AddSkill>스킬 추가</PMU_AddSkill>
