@@ -9,7 +9,7 @@
   <PMU_Conditions>조건 (스킬, 트레잇, 건강)</PMU_Conditions>
   <PMU_AddSkill>스킬 추가</PMU_AddSkill>
   <PMU_AddTrait>트레잇 추가</PMU_AddTrait>
-  <PMU_NoConditions>아직 조건이 없습니다. 조건을 추가하면 림을 찾기 시작합니다.</PMU_NoConditions>
+  <PMU_NoConditions>아직 스킬이 없습니다. 스킬을 추가하면 림을 찾기 시작합니다.</PMU_NoConditions>
   <PMU_ResetConditions>초기화</PMU_ResetConditions>
   <PMU_ResetConditionsTip>모든 조건을 지웁니다.</PMU_ResetConditionsTip>
   <PMU_ResetConditionsConfirm>설정한 조건을 모두 지울까요?</PMU_ResetConditionsConfirm>
@@ -18,10 +18,8 @@
   <PMU_KindIllness>질병</PMU_KindIllness>
   <PMU_KindMissingPart>신체 결손</PMU_KindMissingPart>
   <PMU_KindAddiction>중독</PMU_KindAddiction>
-  <PMU_NoPain>통증 없음</PMU_NoPain>
-  <PMU_AnyIllness>아무 질병</PMU_AnyIllness>
-  <PMU_AnyMissingPart>아무 신체 결손</PMU_AnyMissingPart>
-  <PMU_AnyAddiction>아무 중독</PMU_AnyAddiction>
+  <PMU_KindScar>흉터</PMU_KindScar>
+  <PMU_NoIssue>건강이슈 없음</PMU_NoIssue>
   <PMU_PassionNone>열정 없음</PMU_PassionNone>
   <PMU_PassionMinor>열정 (보통)</PMU_PassionMinor>
   <PMU_PassionMajor>열정 (대단함)</PMU_PassionMajor>

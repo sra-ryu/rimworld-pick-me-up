@@ -21,7 +21,7 @@ The pawn list next to it. Untick a pawn to hide its arrow, and tick it again to 
 - Pick any skills (modded skills included) and a minimum level for each one.
 - Pick a passion (none, minor or major) for any skill, shown as flame icons.
 - Pick traits (for example Tough or Kind) that a pawn must have. Traits are yes or no, so they have no level.
-- Pick health conditions: any illness or a specific one, any missing body part or a specific one, any addiction or a specific drug, and "no pain" (pawns in any pain are left out).
+- Leave out pawns with a health issue: any illness, any missing body part, any addiction, or any scar (permanent injury). You can also keep only pawns with "no health issues" (no illness, missing part, addiction, scar or pain).
 - Combine the conditions with **AND** ("Medicine and Intellectual at level 8 or higher") or **OR** ("Medicine or Intellectual at level 8 or higher").
 - If a matching hostile pawn is on the map you are viewing, an arrow appears above their head.
 - A condition window you can open while playing, with a pawn list next to it that shows every matching pawn. Untick a pawn to hide its arrow. You can show it again from the list.
@@ -67,7 +67,7 @@ The built `Assemblies/*.dll` and `*.pdb` files are not committed, so every fresh
 ## Usage
 
 1. Open `Options > Keyboard config`, find **Pick Me Up** and assign a key to **Open/close condition window** (and optionally **Show/hide arrow markers**).
-2. Press that key during play, click **Add skill** or **Add trait**, and choose one from the list. For a skill, drag the slider to the minimum level and click the flame icon to set a passion if you want one. Repeat for more.
+2. Press that key during play, click **Add skill**, **Add trait** or **Add health**. For skills, pick one from the list. For traits, click names in the list to select them (selected ones turn green) and click again to deselect. For health, click **Add health** to unfold the checkboxes under the buttons: tick any of Illness, Missing part and Addiction, or tick **No health issues** to clear the others. For a skill, drag the slider to the minimum level and click the flame icon to set a passion if you want one. Repeat for more.
 3. Choose **Match all conditions (AND)** or **Match any condition (OR)**.
 4. Matching hostile pawns get an arrow right away. The same editor is also available under `Options > Mod settings > Pick Me Up`.
 5. If you only like some of them, use the pawn list next to the window: untick a pawn to hide its arrow. **Show all** brings every hidden arrow back.

@@ -9,7 +9,7 @@
   <PMU_Conditions>Conditions (skills, traits and health)</PMU_Conditions>
   <PMU_AddSkill>Add skill</PMU_AddSkill>
   <PMU_AddTrait>Add trait</PMU_AddTrait>
-  <PMU_NoConditions>No conditions yet. Add one to start looking for pawns.</PMU_NoConditions>
+  <PMU_NoConditions>No skills yet. Add one to start looking for pawns.</PMU_NoConditions>
   <PMU_ResetConditions>Reset</PMU_ResetConditions>
   <PMU_ResetConditionsTip>Remove every condition.</PMU_ResetConditionsTip>
   <PMU_ResetConditionsConfirm>Remove all your conditions?</PMU_ResetConditionsConfirm>
@@ -18,10 +18,8 @@
   <PMU_KindIllness>Illness</PMU_KindIllness>
   <PMU_KindMissingPart>Missing part</PMU_KindMissingPart>
   <PMU_KindAddiction>Addiction</PMU_KindAddiction>
-  <PMU_NoPain>No pain</PMU_NoPain>
-  <PMU_AnyIllness>Any illness</PMU_AnyIllness>
-  <PMU_AnyMissingPart>Any missing part</PMU_AnyMissingPart>
-  <PMU_AnyAddiction>Any addiction</PMU_AnyAddiction>
+  <PMU_KindScar>Scar</PMU_KindScar>
+  <PMU_NoIssue>No health issues</PMU_NoIssue>
   <PMU_PassionNone>No passion</PMU_PassionNone>
   <PMU_PassionMinor>Minor passion</PMU_PassionMinor>
   <PMU_PassionMajor>Major passion</PMU_PassionMajor>
