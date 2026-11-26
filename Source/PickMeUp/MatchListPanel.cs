@@ -7,7 +7,7 @@ namespace PickMeUp
 {
     /// <summary>
     /// Lists the hostile pawns that match the conditions on the current map, with a checkbox per
-    /// pawn to show or hide its arrow. Lets the player undo an arrow they clicked away by mistake.
+    /// pawn to show or hide its arrow.
     /// </summary>
     public class MatchListPanel
     {

@@ -21,7 +21,7 @@ namespace PickMeUp
 
         private readonly List<Pawn> matches = new List<Pawn>();
 
-        // thingIDNumber of the pawns whose arrow the player clicked away. Saved with the game.
+        // thingIDNumber of the pawns whose arrow the player unticked in the pawn list. Saved with the game.
         private readonly HashSet<int> hiddenPawnIds = new HashSet<int>();
         private List<int> hiddenSaveBuffer;
         private float nextRefreshTime;
@@ -49,7 +49,7 @@ namespace PickMeUp
             }
         }
 
-        /// <summary>Brings back every arrow the player clicked away.</summary>
+        /// <summary>Brings back every arrow the player unticked in the pawn list.</summary>
         public void ShowAllHidden()
         {
             hiddenPawnIds.Clear();
@@ -78,15 +78,14 @@ namespace PickMeUp
 
         public override void MapComponentOnGUI()
         {
-            // Mouse events are needed too: clicking an arrow hides it.
-            EventType type = Event.current.type;
-            if ((type != EventType.Repaint && type != EventType.MouseDown && type != EventType.MouseUp)
+            // Only drawing is needed. Arrows are not clickable; hiding is done from the pawn list.
+            if (Event.current.type != EventType.Repaint
                 || map != Find.CurrentMap || !PickMeUpMod.Settings.enabled)
             {
                 return;
             }
 
-            if (type == EventType.Repaint && Time.realtimeSinceStartup >= nextRefreshTime)
+            if (Time.realtimeSinceStartup >= nextRefreshTime)
             {
                 nextRefreshTime = Time.realtimeSinceStartup + RefreshInterval;
                 Refresh();
@@ -112,18 +111,6 @@ namespace PickMeUp
                 Vector2 pos = GenMapUI.LabelDrawPosFor(pawn, ArrowOffsetInCells);
                 var rect = new Rect(pos.x - size / 2f, pos.y - size / 2f, size, size);
                 GUI.DrawTexture(rect, ArrowTextures.Arrow);
-
-                // A window on top of the arrow gets the click instead.
-                if (Find.WindowStack.GetWindowAt(UI.MousePositionOnUIInverted) != null)
-                {
-                    continue;
-                }
-                Widgets.DrawHighlightIfMouseover(rect);
-                TooltipHandler.TipRegion(rect, "PMU_HideArrowTip".Translate());
-                if (Widgets.ButtonInvisible(rect, doMouseoverSound: false))
-                {
-                    SetHidden(pawn, true);
-                }
             }
         }
 

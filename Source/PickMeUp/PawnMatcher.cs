@@ -35,7 +35,8 @@ namespace PickMeUp
             }
 
             IEnumerable<bool> results = settings.conditions.Select(c => Meets(pawn, c))
-                .Concat(settings.traitConditions.Select(t => HasTrait(pawn, t)));
+                .Concat(settings.traitConditions.Select(t => HasTrait(pawn, t)))
+                .Concat(settings.healthConditions.Select(h => h.IsMetBy(pawn)));
             return settings.matchAll ? results.All(r => r) : results.Any(r => r);
         }
 
