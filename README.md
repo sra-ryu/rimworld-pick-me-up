@@ -22,7 +22,7 @@ The pawn list next to it. Untick a pawn to hide its arrow, and tick it again to 
 - Pick a passion (none, minor or major) for any skill, shown as flame icons.
 - Pick traits (for example Tough or Kind) that a pawn must have. Traits are yes or no, so they have no level.
 - Leave out pawns with a health issue: any illness, any missing body part, any addiction, or any scar (permanent injury). You can also keep only pawns with "no health issues" (no illness, missing part, addiction, scar or pain).
-- Combine the conditions with **AND** ("Medicine and Intellectual at level 8 or higher") or **OR** ("Medicine or Intellectual at level 8 or higher").
+- Combine the skills with **AND** ("Medicine and Intellectual at level 8 or higher") or **OR** ("Medicine or Intellectual at level 8 or higher"). Traits have their own AND/OR. Health conditions are not part of it: a pawn must always pass every health condition you set.
 - If a matching hostile pawn is on the map you are viewing, an arrow appears above their head.
 - A condition window you can open while playing, with a pawn list next to it that shows every matching pawn. Untick a pawn to hide its arrow. You can show it again from the list.
 - A switch to hide all arrows without losing your conditions.
@@ -68,7 +68,7 @@ The built `Assemblies/*.dll` and `*.pdb` files are not committed, so every fresh
 
 1. Open `Options > Keyboard config`, find **Pick Me Up** and assign a key to **Open/close condition window** (and optionally **Show/hide arrow markers**).
 2. Press that key during play, click **Add skill**, **Add trait** or **Add health**. For skills, pick one from the list. For traits, click names in the list to select them (selected ones turn green) and click again to deselect. For health, click **Add health** to unfold the checkboxes under the buttons: tick any of Illness, Missing part and Addiction, or tick **No health issues** to clear the others. For a skill, drag the slider to the minimum level and click the flame icon to set a passion if you want one. Repeat for more.
-3. Choose **Match all conditions (AND)** or **Match any condition (OR)**.
+3. For skills and for traits, choose **AND** (all must match) or **OR** (any one is enough). Health conditions are not in this choice: they always apply.
 4. Matching hostile pawns get an arrow right away. The same editor is also available under `Options > Mod settings > Pick Me Up`.
 5. If you only like some of them, use the pawn list next to the window: untick a pawn to hide its arrow. **Show all** brings every hidden arrow back.
 
@@ -125,7 +125,7 @@ RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리
 - 스킬마다 열정(없음, 보통, 대단함)을 지정할 수 있습니다. 불꽃 아이콘으로 표시됩니다.
 - 림이 가져야 하는 트레잇(예: 강인함, 다정다감)을 지정합니다. 트레잇은 있음/없음만 보므로 레벨은 없습니다.
 - 건강 문제가 있는 림을 뺄 수 있습니다: 질병, 신체 결손, 중독, 흉터(영구 상처). "건강이슈 없음"을 고르면 이런 문제가 없는 림만 남깁니다.
-- 조건을 **AND**("의학과 연구가 모두 8레벨 이상") 또는 **OR**("의학 또는 연구가 8레벨 이상")로 묶을 수 있습니다.
+- 스킬은 **AND**("의학과 연구가 모두 8레벨 이상") 또는 **OR**("의학 또는 연구가 8레벨 이상")로 묶을 수 있습니다. 트레잇은 따로 AND/OR를 고릅니다. 건강 조건은 AND/OR와 상관없이 항상 모두 만족해야 합니다.
 - 지금 보고 있는 맵에 조건에 맞는 적대 림이 있다면 머리 위에 화살표가 표시됩니다.
 - 플레이 중에 열 수 있는 조건 창과, 그 옆에서 조건에 맞는 림을 한눈에 보여 주는 림 목록이 있습니다. 목록에서 체크를 풀면 그 림의 화살표가 숨겨지고, 다시 체크하면 돌아옵니다.
 - 조건은 유지한 채 모든 화살표만 끄는 스위치가 있습니다.
@@ -159,7 +159,7 @@ RimWorld 1.7용 모드입니다. 원하는 스킬을 가진 적대 림의 머리
    - 스킬: 목록에서 하나를 고릅니다. 행에서 슬라이더로 최소 레벨을 정하고, 불꽃 아이콘을 눌러 열정을 고를 수 있습니다.
    - 트레잇: 목록에서 이름을 눌러 고릅니다. 선택된 트레잇은 초록색으로 표시되고, 다시 누르면 선택이 풀립니다.
    - 건강: **건강 추가**를 누르면 체크박스가 버튼 아래에 펼쳐집니다. 질병, 신체 결손, 중독, 흉터는 여러 개를 함께 체크할 수 있습니다. **건강이슈 없음**을 체크하면 나머지는 모두 풀리고 이것만 남습니다.
-3. **모든 조건 만족 (AND)** 또는 **하나라도 만족 (OR)** 중에서 고릅니다.
+3. 스킬과 트레잇 각각에서 **AND**(모두 만족) 또는 **OR**(하나라도 만족) 중에서 고릅니다. 건강 조건은 여기에 나오지 않고 항상 적용됩니다.
 4. 조건에 맞는 적대 림에 바로 화살표가 표시됩니다. 같은 설정 화면이 `환경설정 → 모드 설정 → Pick Me Up`에도 있습니다.
 5. 마음에 드는 림만 남기고 싶다면 창 옆의 림 목록을 쓰세요. 체크를 풀면 그 림의 화살표가 숨겨집니다. **모두 표시**를 누르면 숨긴 화살표가 전부 돌아옵니다.
 
