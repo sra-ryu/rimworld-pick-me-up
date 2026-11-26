@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using Verse;
 
@@ -28,26 +29,14 @@ namespace PickMeUp
 
         public static bool Matches(Pawn pawn, PickMeUpSettings settings)
         {
-            if (settings == null || settings.conditions.Count == 0 || pawn?.skills == null)
+            if (settings == null || settings.ConditionCount == 0 || pawn?.skills == null)
             {
                 return false; // nothing to look for
             }
 
-            foreach (SkillCondition condition in settings.conditions)
-            {
-                bool met = Meets(pawn, condition);
-                if (settings.matchAll && !met)
-                {
-                    return false;
-                }
-                if (!settings.matchAll && met)
-                {
-                    return true;
-                }
-            }
-
-            // AND: nothing failed. OR: nothing matched.
-            return settings.matchAll;
+            IEnumerable<bool> results = settings.conditions.Select(c => Meets(pawn, c))
+                .Concat(settings.traitConditions.Select(t => HasTrait(pawn, t)));
+            return settings.matchAll ? results.All(r => r) : results.Any(r => r);
         }
 
         private static bool Meets(Pawn pawn, SkillCondition condition)
@@ -65,6 +54,12 @@ namespace PickMeUp
             }
 
             return record.Level >= condition.minLevel && record.passion >= condition.passion;
+        }
+
+        private static bool HasTrait(Pawn pawn, TraitCondition condition)
+        {
+            TraitDef def = condition.TraitDef;
+            return def != null && pawn.story?.traits != null && pawn.story.traits.HasTrait(def);
         }
 
         /// <summary>Every matching pawn on the given map, hostile ones only.</summary>

@@ -6,9 +6,10 @@
   <PMU_MatchAllTip>A pawn is picked only if every condition below is met.</PMU_MatchAllTip>
   <PMU_MatchAny>Match any condition (OR)</PMU_MatchAny>
   <PMU_MatchAnyTip>A pawn is picked if at least one condition below is met.</PMU_MatchAnyTip>
-  <PMU_Conditions>Skill conditions (skill and minimum level)</PMU_Conditions>
-  <PMU_AddCondition>Add condition</PMU_AddCondition>
-  <PMU_AllSkillsUsed>Every skill already has a condition.</PMU_AllSkillsUsed>
+  <PMU_Conditions>Conditions (skills and traits)</PMU_Conditions>
+  <PMU_AddSkill>Add skill</PMU_AddSkill>
+  <PMU_AddTrait>Add trait</PMU_AddTrait>
+  <PMU_AllConditionsUsed>Every skill and trait already has a condition.</PMU_AllConditionsUsed>
   <PMU_NoConditions>No conditions yet. Add one to start looking for pawns.</PMU_NoConditions>
   <PMU_ResetConditions>Reset</PMU_ResetConditions>
   <PMU_ResetConditionsTip>Remove every condition.</PMU_ResetConditionsTip>

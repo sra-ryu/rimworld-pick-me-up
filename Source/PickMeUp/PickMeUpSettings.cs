@@ -14,10 +14,16 @@ namespace PickMeUp
 
         public List<SkillCondition> conditions = new List<SkillCondition>();
 
+        public List<TraitCondition> traitConditions = new List<TraitCondition>();
+
+        /// <summary>Skill and trait conditions together.</summary>
+        public int ConditionCount => conditions.Count + traitConditions.Count;
+
         /// <summary>Removes every condition, back to the empty state a fresh install starts with.</summary>
         public void ResetConditions()
         {
             conditions.Clear();
+            traitConditions.Clear();
         }
 
         public override void ExposeData()
@@ -25,6 +31,7 @@ namespace PickMeUp
             Scribe_Values.Look(ref enabled, "enabled", true);
             Scribe_Values.Look(ref matchAll, "matchAll", true);
             Scribe_Collections.Look(ref conditions, "conditions", LookMode.Deep);
+            Scribe_Collections.Look(ref traitConditions, "traitConditions", LookMode.Deep);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -32,7 +39,12 @@ namespace PickMeUp
                 {
                     conditions = new List<SkillCondition>();
                 }
+                if (traitConditions == null)
+                {
+                    traitConditions = new List<TraitCondition>();
+                }
                 conditions.RemoveAll(c => c == null);
+                traitConditions.RemoveAll(c => c == null);
             }
         }
     }
