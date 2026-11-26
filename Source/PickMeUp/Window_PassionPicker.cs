@@ -52,6 +52,14 @@ namespace PickMeUp
                 return;
             }
 
+            // Close on any click outside this window. The game's own "close when clicking outside" does
+            // not work for these windows, because a click on another window moves that window to the top.
+            if (Event.current.type == EventType.MouseDown && !windowRect.Contains(UI.MousePositionOnUI))
+            {
+                Close(false);
+                return;
+            }
+
             for (int i = 0; i < Levels.Length; i++)
             {
                 Passion level = Levels[i];
