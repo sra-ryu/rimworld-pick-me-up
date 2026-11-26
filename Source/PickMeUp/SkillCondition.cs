@@ -12,6 +12,9 @@ namespace PickMeUp
         public string skillDefName;
         public int minLevel = DefaultLevel;
 
+        /// <summary>Minimum passion for the skill. None means no passion is required.</summary>
+        public Passion passion = Passion.None;
+
         /// <summary>Null when the skill no longer exists (e.g. a removed modded skill).</summary>
         public SkillDef SkillDef =>
             skillDefName == null ? null : DefDatabase<SkillDef>.GetNamedSilentFail(skillDefName);
@@ -22,6 +25,7 @@ namespace PickMeUp
             // forceSave: RimWorld skips values equal to the default, which would silently change
             // saved conditions whenever DefaultLevel changes.
             Scribe_Values.Look(ref minLevel, "minLevel", DefaultLevel, forceSave: true);
+            Scribe_Values.Look(ref passion, "passion", Passion.None);
         }
     }
 }

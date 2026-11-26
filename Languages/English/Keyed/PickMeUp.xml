@@ -14,6 +14,10 @@
   <PMU_ResetConditionsTip>Remove every condition.</PMU_ResetConditionsTip>
   <PMU_ResetConditionsConfirm>Remove all your conditions?</PMU_ResetConditionsConfirm>
   <PMU_RemoveCondition>Remove this condition</PMU_RemoveCondition>
+  <PMU_PassionNone>No passion</PMU_PassionNone>
+  <PMU_PassionMinor>Minor passion</PMU_PassionMinor>
+  <PMU_PassionMajor>Major passion</PMU_PassionMajor>
+  <PMU_PassionTip>Click to change the passion this skill requires.</PMU_PassionTip>
   <PMU_Enabled>Show arrow markers</PMU_Enabled>
   <PMU_EnabledTip>Turn the markers off without losing your conditions.</PMU_EnabledTip>
   <PMU_HideArrowTip>Click to hide this pawn's arrow.</PMU_HideArrowTip>

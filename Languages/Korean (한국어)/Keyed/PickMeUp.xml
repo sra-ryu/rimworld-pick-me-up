@@ -14,6 +14,10 @@
   <PMU_ResetConditionsTip>모든 조건을 지웁니다.</PMU_ResetConditionsTip>
   <PMU_ResetConditionsConfirm>설정한 조건을 모두 지울까요?</PMU_ResetConditionsConfirm>
   <PMU_RemoveCondition>이 조건 삭제</PMU_RemoveCondition>
+  <PMU_PassionNone>열정 없음</PMU_PassionNone>
+  <PMU_PassionMinor>열정 (보통)</PMU_PassionMinor>
+  <PMU_PassionMajor>열정 (대단함)</PMU_PassionMajor>
+  <PMU_PassionTip>클릭하면 이 스킬에 요구하는 열정을 바꿉니다.</PMU_PassionTip>
   <PMU_Enabled>화살표 마크 표시</PMU_Enabled>
   <PMU_EnabledTip>조건은 그대로 두고 마크만 끌 수 있습니다.</PMU_EnabledTip>
   <PMU_HideArrowTip>클릭하면 이 림의 화살표를 숨깁니다.</PMU_HideArrowTip>

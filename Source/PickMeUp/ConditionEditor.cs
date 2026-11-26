@@ -14,6 +14,7 @@ namespace PickMeUp
     {
         private const float RowHeight = 32f;
         private const float SkillButtonWidth = 180f;
+        private const float PassionButtonWidth = 44f;
         private const float LevelLabelWidth = 36f;
         private const float DeleteSize = 24f;
 
@@ -116,17 +117,28 @@ namespace PickMeUp
         /// <summary>Draws one row. Returns true when its delete button was clicked.</summary>
         private bool DrawConditionRow(Rect row, SkillCondition condition)
         {
-            // [skill dropdown] [ level slider ] [level number] [x]
+            // [skill dropdown] [passion toggle] [ level slider ] [level number] [x]
             var skillRect = new Rect(row.x, row.y, SkillButtonWidth, row.height);
+            var passionRect = new Rect(skillRect.xMax + 6f, row.y, PassionButtonWidth, row.height);
             var deleteRect = new Rect(row.xMax - DeleteSize, row.y + (row.height - DeleteSize) / 2f,
                 DeleteSize, DeleteSize);
             var levelRect = new Rect(deleteRect.x - LevelLabelWidth - 6f, row.y, LevelLabelWidth, row.height);
-            var sliderRect = new Rect(skillRect.xMax + 10f, row.y + 6f,
-                levelRect.x - skillRect.xMax - 20f, row.height - 12f);
+            var sliderRect = new Rect(passionRect.xMax + 10f, row.y + 6f,
+                levelRect.x - passionRect.xMax - 20f, row.height - 12f);
 
             if (Widgets.ButtonText(skillRect, SkillLabel(condition)))
             {
                 OpenSkillMenu(condition);
+            }
+
+            // Shows the current passion as flames. Click to open the picker below the mouse.
+            TooltipHandler.TipRegion(passionRect, "PMU_PassionTip".Translate());
+            Widgets.DrawHighlightIfMouseover(passionRect);
+            var passionIconRect = new Rect(passionRect.center.x - 11f, passionRect.center.y - 11f, 22f, 22f);
+            Widgets.DrawTextureFitted(passionIconRect, Window_PassionPicker.IconFor(condition.passion), 1f);
+            if (Widgets.ButtonInvisible(passionRect))
+            {
+                Find.WindowStack.Add(new Window_PassionPicker(condition, UI.MousePositionOnUI));
             }
 
             condition.minLevel = Mathf.RoundToInt(Widgets.HorizontalSlider(

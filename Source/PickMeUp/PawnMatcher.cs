@@ -64,7 +64,7 @@ namespace PickMeUp
                 return false; // the pawn can never do this skill
             }
 
-            return record.Level >= condition.minLevel;
+            return record.Level >= condition.minLevel && record.passion >= condition.passion;
         }
 
         /// <summary>Every matching pawn on the given map, hostile ones only.</summary>
